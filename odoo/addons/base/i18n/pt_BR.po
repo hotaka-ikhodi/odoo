@@ -8,8 +8,10 @@
 # Ruani Lazzarotto <ruanilazzarotto@gmail.com>, 2023
 # douglas custodio <douglascstd@yahoo.com>, 2023
 # Éder Brito <britoederr@gmail.com>, 2023
-# Kevilyn Rosa, 2023
 # Martin Trigaux, 2023
+# Diego Sayron, 2023
+# Kevilyn Rosa, 2023
+# adrianojprado <adrianojprado@gmail.com>, 2023
 # Layna Nascimento, 2023
 # 
 msgid ""
@@ -1264,6 +1266,13 @@ msgid ""
 "- the portal security settings page if the user is not internal. \n"
 "    "
 msgstr ""
+"\n"
+"E-mail de convite 2FA\n"
+"===============\n"
+"Permitir que os usuários convidem outro usuário para usar a autenticação de dois fatores\n"
+"enviando um e-mail para o usuário alvo. Este e-mail os redireciona para:\n"
+"- as configurações de segurança do usuário, se o usuário for interno.\n"
+"- a página de configurações de segurança do portal se o usuário não for interno."
 
 #. module: base
 #: model:ir.module.module,description:base.module_auth_totp_mail_enforce
@@ -7237,6 +7246,10 @@ msgid ""
 "                    aerospace, environmental and applied fluid dynamics, and\n"
 "                    turbomachinery and propulsion)."
 msgstr ""
+"Uma organização internacional educacional e científica\n"
+"                    sem fins lucrativos com três departamentos (aeronáutica e\n"
+"                    aeroespacial, dinâmicas aplicadas dos fluidos e ambientais, e\n"
+"                    turbomáquinas e propulsão)."
 
 #. module: base
 #: model:res.partner,website_short_description:base.res_partner_3
@@ -7833,7 +7846,7 @@ msgstr "Adicione um formulário de sugestão de tarefa ao seu site"
 #. module: base
 #: model:ir.module.module,summary:base.module_website_mail_group
 msgid "Add a website snippet for the mail groups."
-msgstr "Adicione um snippet de site para os grupos de e-mail."
+msgstr "Adicione um bloco de código de site para os grupos de e-mail."
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_slides_survey
@@ -8269,6 +8282,8 @@ msgid ""
 "All our contractual relations will be governed exclusively by United States "
 "law."
 msgstr ""
+"Todas as nossas relações contratuais serão regidas exclusivamente pela "
+"legislação dos Estados Unidos."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_partner__lang
@@ -8597,7 +8612,7 @@ msgstr "Aplicar para Gravação"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_appointment
 msgid "Appointments"
-msgstr "Reuniões"
+msgstr "Compromissos"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_appraisal
@@ -8881,7 +8896,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_mail_server__smtp_authentication
 msgid "Authenticate with"
-msgstr ""
+msgstr "Autenticar com"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_mail_server__smtp_authentication_info
@@ -8965,28 +8980,28 @@ msgstr "Avatar"
 #: model:ir.model.fields,field_description:base.field_res_partner__avatar_1024
 #: model:ir.model.fields,field_description:base.field_res_users__avatar_1024
 msgid "Avatar 1024"
-msgstr ""
+msgstr "Avatar 1024"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_avatar_mixin__avatar_128
 #: model:ir.model.fields,field_description:base.field_res_partner__avatar_128
 #: model:ir.model.fields,field_description:base.field_res_users__avatar_128
 msgid "Avatar 128"
-msgstr ""
+msgstr "Avatar 128"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_avatar_mixin__avatar_256
 #: model:ir.model.fields,field_description:base.field_res_partner__avatar_256
 #: model:ir.model.fields,field_description:base.field_res_users__avatar_256
 msgid "Avatar 256"
-msgstr ""
+msgstr "Avatar 256"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_avatar_mixin__avatar_512
 #: model:ir.model.fields,field_description:base.field_res_partner__avatar_512
 #: model:ir.model.fields,field_description:base.field_res_users__avatar_512
 msgid "Avatar 512"
-msgstr ""
+msgstr "Avatar 512"
 
 #. module: base
 #: model:ir.model,name:base.model_avatar_mixin
@@ -9129,7 +9144,7 @@ msgstr "Codigo de Identificação do Banco"
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_partner_bank_search
 msgid "Bank Name"
-msgstr "Nome de Banco"
+msgstr "Nome do banco"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_partner_bank_form
@@ -9876,6 +9891,7 @@ msgstr "Centralize seus contatos"
 #: model:ir.module.module,summary:base.module_knowledge
 msgid "Centralize, manage, share and grow your knowledge library"
 msgstr ""
+"Centralize, gerencie, compartilhe e amplie sua biblioteca de conhecimento"
 
 #. module: base
 #: model_terms:res.company,invoice_terms_html:base.main_company
@@ -10453,6 +10469,13 @@ msgstr "Nome Completo"
 #: model:ir.model.fields,field_description:base.field_ir_model_fields__compute
 msgid "Compute"
 msgstr "Calcular"
+
+#. module: base
+#. odoo-python
+#: code:addons/base/models/ir_model.py:0
+#, python-format
+msgid "Compute method cannot depend on field 'id'"
+msgstr ""
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_model_form
@@ -11692,6 +11715,9 @@ msgid ""
 "                Chain processes in order to make our customers more productive,\n"
 "                responsive and profitable."
 msgstr ""
+"A Deco Addict projeta, desenvolve, integra e oferece suporte a processos de RH e da cadeia\n"
+"de suprimentos, a fim de tornar nossos clientes mais\n"
+"produtivos, ágeis e lucrativos."
 
 #. module: base
 #: model:res.partner,website_short_description:base.res_partner_2
@@ -11710,6 +11736,9 @@ msgid ""
 "                with Open Sources software to manage their businesses. Our\n"
 "                consultants are experts in the following areas:"
 msgstr ""
+"A Deco Addict integra ERP para empresas globais e dá suporte a PMEs\n"
+"com software de código aberto para gerenciar seus negócios. Nossos\n"
+"consultores são especialistas nas seguintes áreas:"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_partner_deduplicate
@@ -12525,7 +12554,7 @@ msgstr "Endereço de Email"
 #: model:ir.module.category,name:base.module_category_marketing_email_marketing
 #: model:ir.module.module,shortdesc:base.module_mass_mailing
 msgid "Email Marketing"
-msgstr "Marketing por E-mail"
+msgstr "Marketing de E-mail"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_users__signature
@@ -12648,7 +12677,7 @@ msgstr "Insira uma descrição e o propósito da chave."
 #. module: base
 #: model:ir.module.module,summary:base.module_website
 msgid "Enterprise website builder"
-msgstr "Enterprise website builder"
+msgstr "Criador de Sites Enterprise"
 
 #. module: base
 #: model:res.partner.industry,name:base.res_partner_industry_R
@@ -12694,6 +12723,16 @@ msgstr "Erro"
 #: model:ir.model.fields,help:base.field_ir_model_constraint__message
 msgid "Error message returned when the constraint is violated."
 msgstr "Mensagem de erro retornada quando a restrição é violada."
+
+#. module: base
+#. odoo-python
+#: code:addons/translate.py:0
+#, python-format
+msgid ""
+"Error while parsing view:\n"
+"\n"
+"%s"
+msgstr ""
 
 #. module: base
 #. odoo-python
@@ -13505,7 +13544,7 @@ msgid ""
 "                                                          Useful to (hard) reset broken views or to read arch from file in dev-xml mode."
 msgstr ""
 "Arquivo de onde a visualização se origina.\n"
-"                                                          Útil para redefinir visões quebradas (difíceis) ou para ler a arquitetura do arquivo no modo dev-xml."
+"                                                          Útil para fazer uma reinicialização (forçada) de visualizações quebradas ou para ler o arch do arquivo no modo dev-xml."
 
 #. module: base
 #: model:ir.model,name:base.model_ir_binary
@@ -15194,7 +15233,7 @@ msgstr "Usuários Inativos"
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_asset__directive__include
 msgid "Include"
-msgstr ""
+msgstr "Incluir"
 
 #. module: base
 #. odoo-python
@@ -15562,7 +15601,12 @@ msgid "Invalid 'group by' parameter"
 msgstr "Invalid 'group by' parameter"
 
 #. module: base
-#. odoo-python
+#: code:addons/base/models/ir_default.py:0
+#, python-format
+msgid "Invalid JSON format in Default Value field."
+msgstr ""
+
+#. module: base
 #: code:addons/models.py:0
 #, python-format
 msgid "Invalid aggregation function %r."
@@ -15743,7 +15787,7 @@ msgstr "Inventário"
 #: model_terms:res.partner,website_description:base.res_partner_2
 #: model_terms:res.partner,website_description:base.res_partner_4
 msgid "Inventory and Warehouse management"
-msgstr ""
+msgstr "Gestão de inventário e armazém"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_purchase_price_diff
@@ -15874,6 +15918,11 @@ msgid ""
 "                    series) and encourages \"training in research through\n"
 "                    research\"."
 msgstr ""
+"Oferece ensino de pós-graduação em dinâmica de fluidos\n"
+"(mestrado de pesquisa em dinâmica dos fluidos, antigo \"Curso de\n"
+"de Diploma\", programa de doutorado, programa de estágio e série de palestras) e\n"
+"e incentiva o \"treinamento em pesquisa por meio de\n"
+"pesquisa\"."
 
 #. module: base
 #: model_terms:res.partner,website_description:base.res_partner_3
@@ -15888,6 +15937,15 @@ msgid ""
 "                    mainly by governmental and international agencies as well\n"
 "                    as industries."
 msgstr ""
+"Ela realiza e promove pesquisas no campo da dinâmica\n"
+"dinâmica de fluidos. Possui cerca de cinquenta túneis de vento diferentes,\n"
+"turbomáquinas e outras instalações de teste especializadas, algumas\n"
+"das quais são únicas ou as maiores do mundo. Faz extensa\n"
+"pesquisa sobre aspectos experimentais, computacionais e teóricos\n"
+"de fluxos de gases e líquidos sob a direção\n"
+"do corpo docente e de engenheiros de pesquisa, patrocinados\n"
+"principalmente por agências governamentais e internacionais, bem como\n"
+"indústrias."
 
 #. module: base
 #: model:res.country,name:base.it
@@ -16089,7 +16147,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_stock_landed_costs
 msgid "Landed Costs"
-msgstr "Custos Adicionais"
+msgstr "Custos de Desembarque"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_landed_costs
@@ -16099,7 +16157,7 @@ msgstr "Custos de Importação em OP"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_subonctracting_landed_costs
 msgid "Landed Costs With Subcontracting order"
-msgstr ""
+msgstr "Custos de Importação com Pedido de Subcontratação"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_mrp_landed_costs
@@ -16819,7 +16877,7 @@ msgstr "Falhou a entrega da mensagem"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mail_group
 msgid "Mail Group"
-msgstr ""
+msgstr "Grupo de e-mails"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mail_plugin
@@ -17138,7 +17196,7 @@ msgstr "Marketing"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_marketing_automation
 msgid "Marketing Automation"
-msgstr "Automação de Marketing"
+msgstr "MKT: Automação"
 
 #. module: base
 #: model:res.country,name:base.mh
@@ -17206,7 +17264,7 @@ msgstr ""
 #: model_terms:res.partner,website_description:base.res_partner_2
 #: model_terms:res.partner,website_description:base.res_partner_4
 msgid "Materials Management"
-msgstr ""
+msgstr "Gestão de materiais"
 
 #. module: base
 #: model:res.country,name:base.mr
@@ -17292,7 +17350,7 @@ msgstr "Merge Partner Line"
 #. module: base
 #: model:ir.model,name:base.model_base_partner_merge_automatic_wizard
 msgid "Merge Partner Wizard"
-msgstr "Merge Partner Wizard"
+msgstr "Assistente de mesclagem de usuário"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.base_partner_merge_automatic_wizard_form
@@ -18738,6 +18796,62 @@ msgid ""
 "Compare revenues with forecasts and budgets in real time.\n"
 "\n"
 msgstr ""
+"Odoo CRM -------- Aumente a produtividade de vendas, melhore as taxas de "
+"ganho, aumente a receita com o Odoo <a "
+"href=\"https://www.odoo.com/page/crm\">Open Source CRM</a> . Gerencie seu "
+"funil de vendas sem esforço. Atraia leads, acompanhe ligações e reuniões. "
+"Analise a qualidade de seus leads para tomar decisões informadas e "
+"economizar tempo integrando e-mails diretamente no aplicativo. Seu funil de "
+"vendas, como você gosta - Acompanhe suas oportunidades gasoduto com a visão "
+"kanban revolucionária. Trabalhe dentro de seu funil de vendas e obtenha "
+"informações visuais instantâneas sobre as próximas ações, novas mensagens, "
+"principais oportunidades e receitas esperadas. Lead Management Made Easy "
+"------------------------- Crie leads automaticamente a partir de emails "
+"recebidos. Analise a eficácia dos leads e compare o desempenho por "
+"campanhas, canais ou equipe de vendas. Encontre duplicatas, mescle leads e "
+"atribua-os ao vendedor certo em uma operação. Gaste menos tempo com "
+"administração e mais tempo com leads qualificados. Organize Suas "
+"Oportunidades --------------------------- Organize suas oportunidades para "
+"manter o foco nas melhores ofertas. Gerencie todas as suas interações com o "
+"cliente a partir da oportunidade, como e-mails, telefonemas, notas internas,"
+" reuniões e cotações. Siga as oportunidades que interessam a você para "
+"receber notificações sobre eventos específicos: negócios vencidos ou "
+"perdidos, estágio alterado, nova demanda do cliente, etc. Integração de "
+"e-mail e automação -------------------- ------------ Trabalhe com os "
+"aplicativos de e-mail que você já usa todos os dias. Independentemente de "
+"sua empresa usar o Microsoft Outlook ou o Gmail, ninguém precisa mudar a "
+"maneira como eles funcionam, para que todos permaneçam produtivos. Rotear, "
+"classificar e filtrar os e-mails recebidos automaticamente. Odoo CRM lida "
+"com os e-mails recebidos e encaminha-os para as oportunidades certas ou para"
+" a equipe de vendas. Novos leads são criados rapidamente e os vendedores "
+"interessados são notificados automaticamente. Agenda Colaborativa "
+"-------------------- Agende suas reuniões e telefonemas usando o calendário "
+"integrado. Você pode ver sua agenda e seus colegas de uma só vez. Como "
+"gerente, é fácil ver com o que sua equipe está ocupada. Campanhas de "
+"automação e marketing de leads --------------------------------------- "
+"Impulsione o desempenho automatizando tarefas com Odoo <a "
+"href=\"https://www.odoo.com/page/crm\">CRM</a> . Use nossas campanhas de "
+"marketing para automatizar a aquisição de leads, acompanhamentos e "
+"promoções. Defina ações automatizadas (por exemplo, peça a um vendedor que "
+"ligue, envie um e-mail, ...) com base em acionadores (sem atividade desde 20"
+" dias, respondendo a um e-mail promocional etc.) Otimize as campanhas de "
+"lead a close em todos os canais. Tome decisões mais inteligentes sobre onde "
+"investir e mostre o impacto de suas atividades de marketing nos resultados "
+"financeiros de sua empresa. Personalize seu ciclo de vendas "
+"-------------------------- Personalize seu ciclo de vendas configurando "
+"etapas de vendas que se encaixam perfeitamente na sua abordagem de vendas. "
+"Controle estatísticas para obter previsões precisas para melhorar seu "
+"desempenho de vendas em todas as etapas do relacionamento com o cliente. "
+"Conduzir o envolvimento com a Gamificação ----------------------------------"
+" ### Alavancar o desejo natural de competição da sua equipe Reforçar o bem "
+"hábitos e melhorar as taxas de ganho com reconhecimento em tempo real e "
+"recompensas inspiradas por [mecânica de jogo] "
+"(http://en.wikipedia.org/wiki/Gamification). Alinhar equipes de vendas em "
+"torno de objetivos de negócios claros com desafios, objetivos pessoais e "
+"líderes de equipe. ### Líderes Promover líderes e competição entre Equipe de"
+" Vendas com índices de desempenho. ### Objetivos Pessoais Atribua metas "
+"claras aos usuários para alinhá-los aos objetivos da empresa. ### Metas da "
+"equipe Compare as receitas com previsões e orçamentos em tempo real.\n"
 
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_module_module__license__oeel-1
@@ -19732,12 +19846,12 @@ msgstr ""
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.onboarding_container
 msgid "Onboarding Tips"
-msgstr ""
+msgstr "Dicas de Integração"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_onboarding
 msgid "Onboarding toolbox"
-msgstr ""
+msgstr "Caixa de ferramentas de integração"
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale_stock_margin
@@ -20421,6 +20535,11 @@ msgid ""
 "                installed IT software into account. That is why Idealis\n"
 "                Consulting delivers excellence in HR and SC Management."
 msgstr ""
+"Nossos especialistas inventam, imaginam e desenvolvem soluções que atendem\n"
+"suas necessidades de negócios. Eles criam um novo ambiente\n"
+"técnico para sua empresa, mas sempre levam em conta o software de TI já\n"
+"instalado. É por isso que a Idealis\n"
+"Consulting oferece excelência em gestão de RH e SC."
 
 #. module: base
 #: model_terms:res.company,invoice_terms_html:base.main_company
@@ -20662,7 +20781,7 @@ msgstr "Empresa matriz"
 #: model:ir.model.fields,field_description:base.field_ir_ui_menu__parent_id
 #: model:ir.model.fields,field_description:base.field_wizard_ir_model_menu_create__menu_id
 msgid "Parent Menu"
-msgstr "Menu Superior(pai)"
+msgstr "Menu primário"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_menu__parent_path
@@ -20938,7 +21057,7 @@ msgstr "Localização de Folha de Pagamento"
 #: model_terms:res.partner,website_description:base.res_partner_2
 #: model_terms:res.partner,website_description:base.res_partner_4
 msgid "Personnel Administration"
-msgstr ""
+msgstr "Administração de pessoal"
 
 #. module: base
 #: model:res.country,name:base.pe
@@ -21177,7 +21296,7 @@ msgstr "Prefixo do registro para a sequência"
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_asset__directive__prepend
 msgid "Prepend"
-msgstr ""
+msgstr "Preceder"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_report_layout__image
@@ -21292,7 +21411,7 @@ msgstr "Imagens do Produto"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_plm
 msgid "Product Lifecycle Management (PLM)"
-msgstr "Gestão do Ciclo de Vida do Produto (PLM)"
+msgstr "Ciclo de Vida do Produto (PLM)"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_product_matrix
@@ -21700,7 +21819,7 @@ msgstr "Questionários em faixas"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_quotation_builder
 msgid "Quotation Builder"
-msgstr "Quotation Builder"
+msgstr "Construtor de Cotações"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_expense
@@ -22278,7 +22397,7 @@ msgstr "Nome do Recurso"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_restaurant
 msgid "Restaurant"
-msgstr "restauração"
+msgstr "Restaurante"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_restaurant
@@ -22404,7 +22523,7 @@ msgstr "SEPA Countries"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mass_mailing_sms
 msgid "SMS Marketing"
-msgstr "Marketing SMS"
+msgstr "Marketing por SMS"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_mail_sms
@@ -22651,7 +22770,7 @@ msgstr "Planilha de Horas de Vendas"
 #: model_terms:res.partner,website_description:base.res_partner_2
 #: model_terms:res.partner,website_description:base.res_partner_4
 msgid "Sales and Distribution"
-msgstr ""
+msgstr "Vendas e distribuição"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_mrp
@@ -23189,7 +23308,7 @@ msgstr "Definir Senha"
 #: model_terms:ir.ui.view,arch_db:base.config_wizard_step_view_form
 #: model_terms:ir.ui.view,arch_db:base.ir_actions_todo_tree
 msgid "Set as Todo"
-msgstr "Definir como À Fazer"
+msgstr "Definir como A Fazer"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_open_base_onboarding_company
@@ -23418,7 +23537,7 @@ msgstr "Snail Mail"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_social
 msgid "Social Marketing"
-msgstr "Mídias Sociais"
+msgstr "Redes Sociais"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_social_media
@@ -23611,7 +23730,7 @@ msgstr "Patrocinadores, Faixas, Calendário, Noticias de Evento"
 #: model:ir.module.module,summary:base.module_spreadsheet_dashboard_stock_account
 #: model:ir.module.module,summary:base.module_spreadsheet_dashboard_website_sale_slides
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Planilha"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_spreadsheet_account
@@ -23716,7 +23835,6 @@ msgstr "Iniciar configuração"
 #: model_terms:ir.ui.view,arch_db:base.view_company_form
 #: model_terms:ir.ui.view,arch_db:base.view_country_state_form
 #: model_terms:ir.ui.view,arch_db:base.view_country_state_tree
-#: model_terms:ir.ui.view,arch_db:base.view_module_filter
 #: model_terms:ir.ui.view,arch_db:base.view_partner_address_form
 #: model_terms:ir.ui.view,arch_db:base.view_partner_form
 #: model_terms:ir.ui.view,arch_db:base.view_res_bank_form
@@ -23759,6 +23877,7 @@ msgstr "Situações"
 #: model:ir.model.fields,field_description:base.field_ir_module_module__state
 #: model:ir.model.fields,field_description:base.field_ir_module_module_dependency__state
 #: model:ir.model.fields,field_description:base.field_ir_module_module_exclusion__state
+#: model_terms:ir.ui.view,arch_db:base.view_module_filter
 #: model_terms:ir.ui.view,arch_db:base.view_users_form_simple_modif
 msgid "Status"
 msgstr "Situação"
@@ -23829,7 +23948,7 @@ msgstr "Complemento"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_studio
 msgid "Studio"
-msgstr "Studio"
+msgstr "Estúdio"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_mrp_subcontracting
@@ -24069,7 +24188,7 @@ msgstr "Tajiquistão"
 #: model_terms:res.partner,website_description:base.res_partner_2
 #: model_terms:res.partner,website_description:base.res_partner_4
 msgid "Talent Management"
-msgstr ""
+msgstr "Gestão de talentos"
 
 #. module: base
 #: model:res.country,name:base.tz
@@ -24438,6 +24557,10 @@ msgid ""
 "order to be valid, any derogation must be expressly agreed to in advance in "
 "writing."
 msgstr ""
+"O cliente renuncia explicitamente a seus próprios termos e condições padrão,"
+" mesmo que tenham sido elaborados após estes termos e condições padrão de "
+"venda. Para que seja válida, qualquer derrogação deve ser expressamente "
+"acordada por escrito e com antecedência."
 
 #. module: base
 #: model:ir.model.constraint,message:base.constraint_res_country_code_uniq
@@ -24954,7 +25077,7 @@ msgstr "O fator de arredondamento deve ser maior que 0!"
 #: code:addons/base/models/ir_mail_server.py:0
 #, python-format
 msgid "The server \"%s\" cannot be used because it is archived."
-msgstr ""
+msgstr "O servidor “%s” não pode ser usado porque está arquivado."
 
 #. module: base
 #. odoo-python
@@ -25542,7 +25665,7 @@ msgstr "To return an action, assign: <code>action = {...}</code>"
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.ir_actions_todo_tree
 msgid "Todo"
-msgstr "À Fazer"
+msgstr "A Fazer"
 
 #. module: base
 #: model:res.country,name:base.tg
@@ -25796,17 +25919,17 @@ msgstr "Tuvalu - Polinésia"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_twitter
 msgid "Twitter Snippet"
-msgstr "Twitter Snippet"
+msgstr "Bloco de código do Twitter"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_twitter_wall
 msgid "Twitter Wall"
-msgstr "Twitter Wall"
+msgstr "Feed do Twitter"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_twitter
 msgid "Twitter scroller snippet in website"
-msgstr "Twitter scroller snippet in website"
+msgstr "Bloco de código de rolagem do Twitter no site"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_auth_totp
@@ -25938,6 +26061,13 @@ msgid "Unable to find Wkhtmltopdf on this system. The PDF can not be created."
 msgstr ""
 "Não é possível localizar Wkhtmltopdf neste sistema. O PDF não pode ser "
 "criado."
+
+#. module: base
+#. odoo-python
+#: code:addons/base/models/ir_fields.py:0
+#, python-format
+msgid "Unable to import field type '%s'  "
+msgstr ""
 
 #. module: base
 #. odoo-python
@@ -27362,6 +27492,15 @@ msgid "You can not create recursive tags."
 msgstr "Você não pode criar marcadores recursivos."
 
 #. module: base
+#. odoo-python
+#: code:addons/base/models/res_users.py:0
+#, python-format
+msgid ""
+"Deleting the template users is not allowed. Deleting this profile will "
+"compromise critical functionalities."
+msgstr ""
+
+#. module: base
 #: model:ir.model.constraint,message:base.constraint_res_users_login_key
 msgid "You can not have two users with the same login !"
 msgstr "Você não pode ter dois usuários com o mesmo login!"
@@ -27490,6 +27629,12 @@ msgstr ""
 
 #. module: base
 #. odoo-python
+#: code:addons/base/models/res_users.py:0
+#, python-format
+msgid "You cannot delete a group linked with a settings field."
+msgstr ""
+
+#. module: base
 #: code:addons/base/models/res_partner.py:0
 #, python-format
 msgid ""
@@ -27519,6 +27664,13 @@ msgstr ""
 "Você deve arquivá-los após arquivar o usuário associado.\n"
 "\n"
 "Usuários associados ativos : %(names)s"
+
+#. module: base
+#. odoo-python
+#: code:addons/base/models/ir_config_parameter.py:0
+#, python-format
+msgid "You cannot delete the %s record."
+msgstr ""
 
 #. module: base
 #. odoo-python
@@ -27553,6 +27705,13 @@ msgid ""
 msgstr ""
 "Você não pode reduzir o número decimal de uma moeda já utilizada numa "
 "entrada de contabilidade."
+
+#. module: base
+#. odoo-python
+#: code:addons/base/models/ir_config_parameter.py:0
+#, python-format
+msgid "You cannot rename config parameters with keys %s"
+msgstr ""
 
 #. module: base
 #. odoo-python
@@ -27652,6 +27811,8 @@ msgid ""
 "Your lunch has been delivered.\n"
 "Enjoy your meal!"
 msgstr ""
+"Seu almoço foi entregue.\n"
+"Aproveite sua refeição!"
 
 #. module: base
 #. odoo-python

@@ -41,7 +41,7 @@ msgstr "Pedidos de fabricação"
 #. module: project_mrp
 #: model:ir.model.fields,field_description:project_mrp.field_project_project__production_count
 msgid "Manufacturing Orders Count"
-msgstr "Contagem de pedidos de produção"
+msgstr "Contagem de pedidos de fabricação"
 
 #. module: project_mrp
 #: model:ir.model,name:project_mrp.model_project_project
@@ -51,4 +51,4 @@ msgstr "Projeto"
 #. module: project_mrp
 #: model:ir.model.fields,field_description:project_mrp.field_project_project__workorder_count
 msgid "Work Order Count"
-msgstr ""
+msgstr "Contagem de ordens de trabalho"

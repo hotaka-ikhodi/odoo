@@ -449,7 +449,8 @@ function classToStyle($editable, cssRules) {
         }
         // Apple Mail
         if (node.nodeName === 'TD' && !node.childNodes.length) {
-            writes.push(() => { node.appendChild(document.createTextNode('&nbsp;')); });
+            // Append non-breaking spaces to empty table cells.
+            writes.push(() => { node.appendChild(document.createTextNode('\u00A0')); });
         }
         // Outlook
         if (node.nodeName === 'A' && node.classList.contains('btn') && !node.classList.contains('btn-link') && !node.children.length) {
@@ -696,6 +697,11 @@ async function toInline($editable, cssRules, $iframe) {
     for (const imgTop of editable.querySelectorAll('.card-img-top')) {
         imgTop.style.setProperty('height', _getHeight(imgTop) + 'px');
     }
+
+    attachmentThumbnailToLinkImg($editable);
+    fontToImg($editable);
+    await svgToPng($editable);
+
     // Fix img-fluid for Outlook.
     for (const image of editable.querySelectorAll('img.img-fluid')) {
         const width = _getWidth(image);
@@ -707,9 +713,6 @@ async function toInline($editable, cssRules, $iframe) {
         _hideForOutlook(image);
     }
 
-    attachmentThumbnailToLinkImg($editable);
-    fontToImg($editable);
-    await svgToPng($editable);
     classToStyle($editable, cssRules);
     bootstrapToTable(editable);
     cardToTable(editable);
@@ -731,7 +734,7 @@ async function toInline($editable, cssRules, $iframe) {
         for (const image of images) {
             if (image.style[attributeName] !== 'auto') {
                 const value = image.getAttribute(attributeName) ||
-                    (attributeName === 'height' && image.offsetHeight);
+                    (attributeName === 'height' && image.offsetHeight) ||
                     (attributeName === 'width' ? _getWidth(image) : _getHeight(image));
                 if (value) {
                     image.setAttribute(attributeName, value);
@@ -752,6 +755,14 @@ async function toInline($editable, cssRules, $iframe) {
 
     // Hide replaced cells on Outlook
     editable.querySelectorAll('.mso-hide').forEach(_hideForOutlook);
+
+    // Replace double quotes in font-family styles with simple quotes (and
+    // simply remove these styles from images).
+    editable.querySelectorAll('[style*=font-family]').forEach(n => (
+        n.nodeName === 'IMG'
+            ? n.style.removeProperty('font-family')
+            : n.setAttribute('style', n.getAttribute('style').replaceAll('"', '\''))
+    ));
 
     // Styles were applied inline, we don't need a style element anymore.
     $editable.find('style').remove();
@@ -977,10 +988,12 @@ function formatTables($editable) {
             row.style.verticalAlign = 'bottom';
         } else if (alignItems === 'stretch') {
             const columns = [...row.querySelectorAll('td.o_converted_col')];
-            const commonAncestor = commonParentGet(columns[0], columns[1]);
-            const biggestHeight = commonAncestor.clientHeight;
-            for (const column of columns) {
-                column.style.height = biggestHeight + 'px';
+            if (columns.length > 1) {
+                const commonAncestor = commonParentGet(columns[0], columns[1]);
+                const biggestHeight = commonAncestor.clientHeight;
+                for (const column of columns) {
+                    column.style.height = biggestHeight + 'px';
+                }
             }
         }
     }
@@ -1123,9 +1136,9 @@ function listGroupToTable(editable) {
 function normalizeColors($editable) {
     const editable = $editable.get(0);
     for (const node of editable.querySelectorAll('[style*="rgb"]')) {
-        const rgbMatch = node.getAttribute('style').match(/rgb?\(([\d\.]*,?\s?){3,4}\)/g);
-        for (const rgb of rgbMatch || []) {
-            node.setAttribute('style', node.getAttribute('style').replace(rgb, rgbToHex(rgb)));
+        const rgbaMatch = node.getAttribute('style').match(/rgba?\(([\d\.]+\s*,?\s*){3,4}\)/g);
+        for (const rgb of rgbaMatch || []) {
+            node.setAttribute('style', node.getAttribute('style').replace(rgb, rgbToHex(rgb, node)));
         }
     }
 }
@@ -1201,7 +1214,7 @@ function normalizeRem($editable, rootFontSize=16) {
  * @param {JQuery} $editable
  */
 async function svgToPng($editable) {
-    for (const svg of $editable.find('img[src$=".svg"]')) {
+    for (const svg of $editable.find('img[src*=".svg"]')) {
         // Make sure the svg is loaded before we convert it.
         await new Promise(resolve => {
             svg.onload = () => resolve();

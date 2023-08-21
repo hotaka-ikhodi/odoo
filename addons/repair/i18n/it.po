@@ -128,7 +128,7 @@ msgstr ""
 #. module: repair
 #: model_terms:ir.ui.view,arch_db:repair.stock_production_lot_view_form
 msgid "<span class=\"o_stat_text\">Repairs</span>"
-msgstr "<span class=\"o_stat_text\">Reparazioni</span>"
+msgstr "<span class=\"o_stat_text\">Riparazioni</span>"
 
 #. module: repair
 #: model_terms:ir.ui.view,arch_db:repair.report_repairorder
@@ -228,7 +228,7 @@ msgstr "Dopo la riparazione"
 #. module: repair
 #: model:ir.model.fields,field_description:repair.field_repair_order__allowed_picking_type_ids
 msgid "Allowed Picking Type"
-msgstr ""
+msgstr "Tipo di prelievo autorizzato"
 
 #. module: repair
 #: model:ir.model.fields,field_description:repair.field_repair_order__message_attachment_count
@@ -341,13 +341,13 @@ msgstr "Creazione fattura massiva (riparazione)"
 #: code:addons/repair/models/stock_picking.py:0
 #, python-format
 msgid "Create Repair"
-msgstr ""
+msgstr "Crea riparazione"
 
 #. module: repair
 #: model:ir.model.fields,field_description:repair.field_stock_picking__is_repairable
 #: model:ir.model.fields,field_description:repair.field_stock_picking_type__is_repairable
 msgid "Create Repair Orders from Returns"
-msgstr ""
+msgstr "Crea ordini di riparazione da resi"
 
 #. module: repair
 #: model_terms:ir.actions.act_window,help:repair.action_repair_order_tag
@@ -550,6 +550,8 @@ msgstr "Se selezionata, alcuni messaggi presentano un errore di consegna."
 msgid ""
 "If ticked, you will be able to directly create repair orders from a return."
 msgstr ""
+"Se selezionato, sarai in grado di creare ordini di riparazione direttamente "
+"da un reso."
 
 #. module: repair
 #: model_terms:ir.actions.act_window,help:repair.action_repair_order_tree
@@ -782,6 +784,7 @@ msgstr "Normale"
 msgid ""
 "Note that the warehouses of the return and repair locations don't match!"
 msgstr ""
+"Nota che i depositi delle sedi di restituzione e riparazione non coincidono!"
 
 #. module: repair
 #: model:ir.model.fields,field_description:repair.field_repair_order__message_needaction_counter
@@ -795,7 +798,7 @@ msgstr "Numero di errori"
 
 #. module: repair
 #: model:ir.model.fields,help:repair.field_repair_order__message_needaction_counter
-msgid "Number of messages which requires an action"
+msgid "Number of messages requiring action"
 msgstr "Numero di messaggi che richiedono un'azione"
 
 #. module: repair
@@ -806,7 +809,7 @@ msgstr "Numero di messaggi con errore di consegna"
 #. module: repair
 #: model:ir.model.fields,field_description:repair.field_stock_picking__nbr_repairs
 msgid "Number of repairs linked to this picking"
-msgstr ""
+msgstr "Numero di riparazioni legate al presente prelievo"
 
 #. module: repair
 #. odoo-python
@@ -1140,12 +1143,12 @@ msgstr "Reso"
 #. module: repair
 #: model:ir.model.fields,help:repair.field_repair_order__picking_id
 msgid "Return Order from which the product to be repaired comes from."
-msgstr ""
+msgstr "Ordine di reso dal quale deriva il prodotto da riparare."
 
 #. module: repair
 #: model:ir.model.fields,field_description:repair.field_stock_picking_type__return_type_of_ids
 msgid "Return Type Of"
-msgstr ""
+msgstr "Tipo di reso di"
 
 #. module: repair
 #: model:ir.model.fields,field_description:repair.field_repair_order__is_returned
@@ -1360,6 +1363,8 @@ msgid ""
 "True if this repair is linked to a Return Order and the order is 'Done'. "
 "False otherwise."
 msgstr ""
+"Vero se la riparazione è collegata ad un ordine di reso e l'ordine è "
+"\"Fatto\". Altrimenti è falso."
 
 #. module: repair
 #: model:ir.model.fields,field_description:repair.field_repair_line__type

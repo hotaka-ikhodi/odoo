@@ -125,7 +125,7 @@ msgstr "Pedidos de fabricação"
 #. module: mrp_account
 #: model:ir.model.fields,field_description:mrp_account.field_account_analytic_account__production_count
 msgid "Manufacturing Orders Count"
-msgstr "Contagem de pedidos de produção"
+msgstr "Contagem de pedidos de fabricação"
 
 #. module: mrp_account
 #: model:ir.model.fields,field_description:mrp_account.field_mrp_workorder__mo_analytic_account_line_id
@@ -197,7 +197,7 @@ msgstr "Ordem de trabalho"
 #. module: mrp_account
 #: model:ir.model.fields,field_description:mrp_account.field_account_analytic_account__workorder_count
 msgid "Work Order Count"
-msgstr ""
+msgstr "Contagem de ordens de trabalho"
 
 #. module: mrp_account
 #: code:addons/mrp_account/models/analytic_account.py:0
