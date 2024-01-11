@@ -36,7 +36,7 @@ _logger = logging.getLogger(__name__)
 
 # Only users who can modify the user (incl. the user herself) see the real contents of these fields
 USER_PRIVATE_FIELDS = []
-MIN_ROUNDS = 350000
+MIN_ROUNDS = 600_000
 concat = chain.from_iterable
 
 #
@@ -230,7 +230,7 @@ class Groups(models.Model):
         result = self.get_external_id()
         missings = {group_id: f'__custom__.group_{group_id}' for group_id, ext_id in result.items() if not ext_id}
         if missings:
-            self.env['ir.model.data'].create(
+            self.env['ir.model.data'].sudo().create(
                 [
                     {
                         'name': name.split('.')[1],
@@ -756,6 +756,10 @@ class Users(models.Model):
     @api.model
     def _get_login_domain(self, login):
         return [('login', '=', login)]
+
+    @api.model
+    def _get_email_domain(self, email):
+        return [('email', '=', email)]
 
     @api.model
     def _get_login_order(self):

@@ -9,14 +9,15 @@
 # Braulio D. López Vázquez <bdl@odoo.com>, 2023
 # Lucia Pacheco, 2023
 # Iran Villalobos López, 2023
-# Fernanda Alvarez, 2023
+# Wil Odoo, 2023
+# Fernanda Alvarez, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2022-09-22 05:56+0000\n"
-"Last-Translator: Fernanda Alvarez, 2023\n"
+"Last-Translator: Fernanda Alvarez, 2024\n"
 "Language-Team: Spanish (Mexico) (https://app.transifex.com/odoo/teams/41243/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4709,9 +4710,9 @@ msgid ""
 "                                to keep his hands full by participating in the development of the software,\n"
 "                                marketing, and customer experience strategies."
 msgstr ""
-"Fundador y chef visionario, Tony es la fuerza motriz detrás de la empresa. Le encanta\n"
-"                                mantenerse ocupado al participar en el desarrollo del software,\n"
-"                                marketing, y estrategias de experiencia de clientes."
+"Tony es el fundador y director, además también impulsa a la empresa. Le encanta\n"
+"                                participar en el desarrollo del software y en\n"
+"                                las estrategias de marketing y de experiencia del cliente."
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -6412,7 +6413,7 @@ msgstr "Chat en vivo"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.theme_view_kanban
 msgid "Live Preview"
-msgstr "Vista previa en vivo"
+msgstr "Previsualización dinámica"
 
 #. module: website
 #. odoo-javascript
@@ -7306,7 +7307,7 @@ msgstr "De acuerdo, no volver a mostrar esto"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "On Appearance"
-msgstr "En la apariencia"
+msgstr "Cuando aparece"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -7672,7 +7673,7 @@ msgstr "Párrafo."
 #: model_terms:ir.ui.view,arch_db:website.snippet_options_background_options
 #: model_terms:ir.ui.view,arch_db:website.snippets
 msgid "Parallax"
-msgstr "Parallax"
+msgstr "Desplazamiento de paralaje"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_theme_website_menu__parent_id
@@ -7723,6 +7724,13 @@ msgstr "Patrón"
 #: model_terms:ir.ui.view,arch_db:website.s_process_steps
 msgid "Pay"
 msgstr "Pagar"
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/js/form_editor_registry.js:0
+#, python-format
+msgid "Phone Number"
+msgstr "Número de teléfono"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_mega_menu_thumbnails
@@ -8390,7 +8398,7 @@ msgstr "Rotar"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options_border_widgets
 msgid "Round Corners"
-msgstr "Esquinas redondas"
+msgstr "Esquinas redondeadas"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_image_gallery_options
@@ -8434,7 +8442,7 @@ msgstr "Optimizado para SEO"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Same as desktop"
-msgstr "El mismo que en la computadora de escritorio"
+msgstr "Igual que en la computadora de escritorio"
 
 #. module: website
 #. odoo-python
@@ -8805,7 +8813,7 @@ msgstr "Compartir"
 #. module: website
 #: model:website.configurator.feature,description:website.feature_module_elearning
 msgid "Share knowledge publicly or for a fee"
-msgstr "Comparta conocimiento de forma pública o cobre una cuota"
+msgstr "Comparta información de forma pública o establezca una tarifa"
 
 #. module: website
 #: model:website.configurator.feature,description:website.feature_module_success_stories
@@ -9266,6 +9274,13 @@ msgstr "Estilo"
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Sub Menus"
 msgstr "Submenús"
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/js/form_editor_registry.js:0
+#, python-format
+msgid "Subject"
+msgstr "Asunto"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.contactus
@@ -11401,6 +11416,13 @@ msgid "You'll be able to create your pages later on."
 msgstr "Podrá crear sus páginas más tarde."
 
 #. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/js/form_editor_registry.js:0
+#, python-format
+msgid "Your Company"
+msgstr "Su empresa "
+
+#. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_dynamic_snippet_template
 msgid ""
 "Your Dynamic Snippet will be displayed here... This message is displayed "
@@ -11408,6 +11430,27 @@ msgid ""
 msgstr ""
 "Su snippet dinámico se mostrará aquí... Este mensaje se muestra porque no "
 "proporcionó ni el filtro ni la plantilla que se usará.<br/>"
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/js/form_editor_registry.js:0
+#, python-format
+msgid "Your Email"
+msgstr "Su correo electrónico"
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/js/form_editor_registry.js:0
+#, python-format
+msgid "Your Name"
+msgstr "Su nombre"
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/js/form_editor_registry.js:0
+#, python-format
+msgid "Your Question"
+msgstr "Su pregunta"
 
 #. module: website
 #. odoo-javascript
@@ -11874,7 +11917,7 @@ msgstr "organización, estructura"
 #: code:addons/website/static/src/client_actions/configurator/configurator.xml:0
 #, python-format
 msgid "perfect website?"
-msgstr "¿un sitio web perfecto?"
+msgstr "sitio web perfecto?"
 
 #. module: website
 #. odoo-javascript

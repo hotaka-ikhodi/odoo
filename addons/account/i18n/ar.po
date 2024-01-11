@@ -12,6 +12,7 @@
 # Mohammed Alreshi <alreshim@hotmail.com>, 2023
 # Martin Trigaux, 2023
 # Niyas Raphy, 2023
+# Wil Odoo, 2023
 # Malaz Abuidris <msea@odoo.com>, 2023
 # 
 msgid ""
@@ -41,9 +42,9 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"الحركة (%s) ليست متوازنة.\n"
-"مجموع الديون يساوي %sومجموع الإعتمادات يساوي %s.\n"
-"قد ترغب في تحديد حساب افتراضي في دفتر اليومية \"%s\" لموازنة كل حركة تلقائياً."
+"الحركة (%s) ليست مسواة.\n"
+"مجموع الديون يساوي %sومجموع الائتمانات يساوي %s.\n"
+"قد ترغب في تحديد حساب افتراضي في دفتر اليومية \"%s\" لمساواة كل حركة تلقائياً. "
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_tax__amount_type
@@ -181,14 +182,14 @@ msgstr "%s - %s؛ %s مفوتر، %s تم تسليمه في %s كل "
 #: code:addons/account/models/product.py:0
 #, python-format
 msgid "%s Excl. Taxes"
-msgstr "%s الضرائب المستنثاة "
+msgstr "%s غير شامل الضريبة  "
 
 #. module: account
 #. odoo-python
 #: code:addons/account/models/product.py:0
 #, python-format
 msgid "%s Incl. Taxes"
-msgstr "%s الضرائب المشمولة "
+msgstr "%s شامل الضريبة "
 
 #. module: account
 #. odoo-python
@@ -218,6 +219,13 @@ msgid ""
 msgstr ""
 "لقد وصل %s إلى حالة لا تصلح فيما يتعلق ببند كشف الحساب ذي الصلة.\n"
 "حتى تكون منتظماً، يجب أن يحتوي قيد اليومية على بند تعليق واحد فقط. "
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_bank_statement.py:0
+#, python-format
+msgid "%s Statement %s"
+msgstr "%s كشف الحساب %s "
 
 #. module: account
 #. odoo-python
@@ -617,15 +625,6 @@ msgid ""
 msgstr ""
 "<i class=\"fa fa-ellipsis-v\" aria-label=\"Selection\" role=\"img\" "
 "title=\"Selection\"/>"
-
-#. module: account
-#: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
-msgid ""
-"<i class=\"fa fa-exclamation-triangle\"/>\n"
-"                            Gaps in the sequence"
-msgstr ""
-"<i class=\"fa fa-exclamation-triangle\"/>\n"
-"                            ثغرات في التسلسل"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.portal_invoice_page
@@ -1167,7 +1166,7 @@ msgstr "<span>إعداد التقارير</span>"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
 msgid "<span>Running Balance</span>"
-msgstr "الرصيد الجاري"
+msgstr "<span>الرصيد الجاري</span> "
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.bill_preview
@@ -2481,8 +2480,8 @@ msgid ""
 "Always positive amount concerned by this matching expressed in the company "
 "currency."
 msgstr ""
-"يكون المبلغ المتعلق بهذه المطابقة إيجابياً دائماً حتى يتم إظهاره بعملة "
-"الشركة. "
+"يكون المبلغ المتعلق بهذه المطابقة موجباً دائماً حتى يتم إظهاره بعملة الشركة."
+" "
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_partial_reconcile__credit_amount_currency
@@ -2490,7 +2489,7 @@ msgid ""
 "Always positive amount concerned by this matching expressed in the credit "
 "line foreign currency."
 msgstr ""
-"يكون المبلغ المتعلق بهذه المطابقة إيجابياً دائماً حتى يتم إظهاره بالعملة "
+"يكون المبلغ المتعلق بهذه المطابقة موجباً دائماً حتى يتم إظهاره بالعملة "
 "الأجنبية لبند الرصيد. "
 
 #. module: account
@@ -2499,7 +2498,7 @@ msgid ""
 "Always positive amount concerned by this matching expressed in the debit "
 "line foreign currency."
 msgstr ""
-"يكون المبلغ المتعلق بهذه المطابقة إيجابياً دائماً حتى يتم إظهاره بالعملة "
+"يكون المبلغ المتعلق بهذه المطابقة موجباً دائماً حتى يتم إظهاره بالعملة "
 "الأجنبية لبند الخصم. "
 
 #. module: account
@@ -2699,7 +2698,7 @@ msgstr "نموذج التوزيع التحليلي "
 #. module: account
 #: model:ir.ui.menu,name:account.menu_analytic__distribution_model
 msgid "Analytic Distribution Models"
-msgstr "نماذج التوزيع التحليلية "
+msgstr "نماذج التوزيع التحليلي "
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line__analytic_distribution_search
@@ -3253,8 +3252,8 @@ msgid ""
 "Bank statements transactions will be posted on the suspense account until "
 "the final reconciliation allowing finding the right account."
 msgstr ""
-"سوف يتم ترحيل معاملات كشف البنك إلى الحساب المعلق إلى أن يتم إجراء التسوية "
-"النهائية مما يتيح إيجاد الحساب الصحيح. "
+"سوف يتم ترحيل معاملات كشف البنك إلى الحساب المعلق إلى أن تسمح التسوية "
+"النهائية بإيجاد الحساب الصحيح. "
 
 #. module: account
 #. odoo-python
@@ -3617,6 +3616,16 @@ msgstr "لا يمكن إنشاء كود حساب غير مستخدم."
 #: code:addons/account/models/account_journal.py:0
 #, python-format
 msgid ""
+"Cannot generate an unused journal code. Please change the name for journal "
+"%s."
+msgstr ""
+"لا يمكن إنشاء كود دفتر يومية غير مستخدم. يرجى تغيير اسم دفتر اليومية %s. "
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_journal.py:0
+#, python-format
+msgid ""
 "Cannot generate an unused journal code. Please fill the 'Shortcode' field."
 msgstr "لا يمكن إنشاء كود يومية غير مستخدم. الرجاء ملء حقل 'الكود المختصر'."
 
@@ -3797,7 +3806,7 @@ msgstr "الكشف النقدي"
 #: code:addons/account/models/account_move_line.py:0
 #, python-format
 msgid "Cash basis rounding difference"
-msgstr " الأساس النقدي التقريب فرق"
+msgstr "فرق التقريب على الأساس النقدي "
 
 #. module: account
 #. odoo-python
@@ -4872,6 +4881,7 @@ msgstr "العملات"
 #: model:ir.model.fields,field_description:account.field_account_automatic_entry_wizard__company_currency_id
 #: model:ir.model.fields,field_description:account.field_account_bank_statement__currency_id
 #: model:ir.model.fields,field_description:account.field_account_chart_template__currency_id
+#: model:ir.model.fields,field_description:account.field_account_invoice_report__currency_id
 #: model:ir.model.fields,field_description:account.field_account_journal__currency_id
 #: model:ir.model.fields,field_description:account.field_account_move__currency_id
 #: model:ir.model.fields,field_description:account.field_account_move_line__currency_id
@@ -6912,6 +6922,18 @@ msgstr "حساب أرباح سعر الصرف"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__payment_tolerance_param
 msgid "Gap"
 msgstr "الفجوة "
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
+msgid ""
+"Gaps due to canceled invoices, deleted entries or manual errors in open "
+"period."
+msgstr ""
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
+msgid "Gaps in the sequence"
+msgstr ""
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_entries_generate_entries
@@ -13109,8 +13131,8 @@ msgstr "حساب معلّق "
 
 #. module: account
 #: model:ir.actions.server,name:account.action_move_switch_invoice_to_credit_note
-msgid "Switch into refund/credit note"
-msgstr "الانتقال إلى الاسترداد/الإشعار الدائن "
+msgid "Switch into invoice/credit note"
+msgstr "الانتقال إلى الفاتورة/إشعار الدائن "
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_payment_term_line__end_month
@@ -13744,13 +13766,6 @@ msgid ""
 "Accountant can change it."
 msgstr ""
 "لا يتفق تسلسل قيد اليومية مع التنسيق الحالي. وحده المحاسب بإمكانه تغييره. "
-
-#. module: account
-#. odoo-python
-#: code:addons/account/models/account_payment_term.py:0
-#, python-format
-msgid "The Months and Days of the Payment Terms lines must be positive."
-msgstr "يجب أن تكون الشهور والأيام لبنود شروط الدفع موجبة. "
 
 #. module: account
 #. odoo-python
@@ -15208,7 +15223,6 @@ msgstr "أنشطة اليوم "
 #: code:addons/account/static/src/components/tax_totals/tax_totals.xml:0
 #: code:addons/account/static/src/xml/legacy_tax_totals.xml:0
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__amount_total
-#: model:ir.model.fields,field_description:account.field_account_invoice_report__price_total
 #: model:ir.model.fields,field_description:account.field_account_move__amount_total
 #: model:ir.model.fields,field_description:account.field_account_move_line__price_total
 #: model:ir.model.fields,field_description:account.field_account_payment__amount_total
@@ -15309,6 +15323,7 @@ msgid "Total amount you have to pay to this vendor."
 msgstr "المبلغ الإجمالي الذي يجب دفعه لهذا المورّد. "
 
 #. module: account
+#: model:ir.model.fields,field_description:account.field_account_invoice_report__price_total
 #: model_terms:ir.ui.view,arch_db:account.view_invoice_tree
 msgid "Total in Currency"
 msgstr "الإجمالي بالعملة "
@@ -16770,6 +16785,13 @@ msgid ""
 msgstr ""
 "لا يمكنك تغيير الحساب لمنع عملية التسوية إذا كانت بعض التسويات الجزئية قيد "
 "التنفيذ. "
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_account.py:0
+#, python-format
+msgid "You cannot switch the type of a posted document."
+msgstr "لا يمكنك تغيير نوع مستند مرحل. "
 
 #. module: account
 #. odoo-python

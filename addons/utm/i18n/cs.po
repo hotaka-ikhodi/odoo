@@ -11,6 +11,7 @@
 # Jiří Podhorecký, 2022
 # Martin Trigaux, 2022
 # Michal Veselý <michal@veselyberanek.net>, 2022
+# Tomáš Píšek, 2023
 # Jakub Smolka, 2023
 # 
 msgid ""
@@ -55,7 +56,7 @@ msgstr ""
 #: code:addons/utm/static/src/js/utm_campaign_kanban_examples.js:0
 #, python-format
 msgid "Approved"
-msgstr "Scháleno"
+msgstr "Schváleno"
 
 #. module: utm
 #: model_terms:ir.ui.view,arch_db:utm.utm_medium_view_search
@@ -339,7 +340,7 @@ msgstr "Naposled upraveno"
 #: code:addons/utm/static/src/js/utm_campaign_kanban_examples.js:0
 #, python-format
 msgid "Later"
-msgstr ""
+msgstr "Později"
 
 #. module: utm
 #: model:ir.ui.menu,name:utm.menu_link_tracker_root
@@ -646,7 +647,7 @@ msgstr ""
 #. module: utm
 #: model:ir.model,name:utm.model_utm_mixin
 msgid "UTM Mixin"
-msgstr ""
+msgstr "UTM mixin"
 
 #. module: utm
 #: model:ir.model,name:utm.model_utm_source
@@ -656,7 +657,7 @@ msgstr "UTM Zdroj"
 #. module: utm
 #: model:ir.model,name:utm.model_utm_source_mixin
 msgid "UTM Source Mixin"
-msgstr ""
+msgstr "UTM zdroj mixin"
 
 #. module: utm
 #: model_terms:ir.actions.act_window,help:utm.utm_source_action
@@ -673,7 +674,7 @@ msgstr ""
 #. module: utm
 #: model:ir.model,name:utm.model_utm_tag
 msgid "UTM Tag"
-msgstr ""
+msgstr "UTM štítek"
 
 #. module: utm
 #: model:ir.ui.menu,name:utm.marketing_utm

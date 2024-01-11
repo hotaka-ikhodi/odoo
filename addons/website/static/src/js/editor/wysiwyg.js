@@ -77,6 +77,8 @@ const WebsiteWysiwyg = Wysiwyg.extend({
                         this._toggleMegaMenu($toggle[0]);
                     }
                 })
+                // FIXME this is not right, the observer should not be inactive
+                // for async periods of time.
                 .then(() => this.odooEditor.observerActive());
         });
 
@@ -253,6 +255,18 @@ const WebsiteWysiwyg = Wysiwyg.extend({
             .dropdown({});
         return toggleDropdown($megaMenuToggles, false);
     },
+    /**
+     * @override
+     */
+    _getRecordInfo: function (editable) {
+        const $editable = $(editable);
+        return {
+            resModel: $editable.data('oe-model'),
+            resId: $editable.data('oe-id'),
+            field: $editable.data('oe-field'),
+            type: $editable.data('oe-type'),
+        }
+      },
     /**
      * Toggles the mega menu.
      *

@@ -18,7 +18,6 @@
 # Ramiz Deniz Öner <deniz@denizoner.com>, 2022
 # abc Def <hdogan1974@gmail.com>, 2022
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2022
-# Levent Karakaş <levent@mektup.at>, 2022
 # Ozlem Cikrikci <ozlemc@eskayazilim.com.tr>, 2022
 # Murat Durmuş <muratd@projetgrup.com>, 2022
 # Umur Akın <umura@projetgrup.com>, 2022
@@ -27,10 +26,11 @@
 # Jérôme JEK <jek@odoo.com>, 2022
 # Yedigen, 2022
 # muhammed ateş, 2022
-# Ediz Duman <neps1192@gmail.com>, 2023
 # Martin Trigaux, 2023
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2023
 # Melih Melik Sonmez, 2023
+# Ediz Duman <neps1192@gmail.com>, 2023
+# Levent Karakaş <levent@mektup.at>, 2023
 # 
 msgid ""
 msgstr ""
@@ -38,7 +38,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-02 10:33+0000\n"
 "PO-Revision-Date: 2022-09-22 05:44+0000\n"
-"Last-Translator: Melih Melik Sonmez, 2023\n"
+"Last-Translator: Levent Karakaş <levent@mektup.at>, 2023\n"
 "Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -237,6 +237,13 @@ msgstr ""
 "%s ilgili ekstre satırıyla ilgili olarak geçersiz bir duruma ulaştı. Tutarlı"
 " olması için, yevmiye kaydının her zaman tam olarak bir askıya alma satırı "
 "olması gerekir."
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_bank_statement.py:0
+#, python-format
+msgid "%s Statement %s"
+msgstr ""
 
 #. module: account
 #. odoo-python
@@ -597,15 +604,6 @@ msgid ""
 msgstr ""
 "<i class=\"fa fa-ellipsis-v\" aria-label=\"Selection\" role=\"img\" "
 "title=\"Selection\"/>"
-
-#. module: account
-#: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
-msgid ""
-"<i class=\"fa fa-exclamation-triangle\"/>\n"
-"                            Gaps in the sequence"
-msgstr ""
-"<i class=\"fa fa-exclamation-triangle\"/>\n"
-"                            Sıralamadaki boşluklar"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.portal_invoice_page
@@ -3610,6 +3608,15 @@ msgstr "Kullanılmayan bir hesap kodu oluşturulamıyor."
 #: code:addons/account/models/account_journal.py:0
 #, python-format
 msgid ""
+"Cannot generate an unused journal code. Please change the name for journal "
+"%s."
+msgstr ""
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_journal.py:0
+#, python-format
+msgid ""
 "Cannot generate an unused journal code. Please fill the 'Shortcode' field."
 msgstr ""
 "Kullanılmayan bir hesap kodu oluşturulamıyor. Lütfen 'Kısa Kod' alanını "
@@ -4879,6 +4886,7 @@ msgstr "Para Birimleri"
 #: model:ir.model.fields,field_description:account.field_account_automatic_entry_wizard__company_currency_id
 #: model:ir.model.fields,field_description:account.field_account_bank_statement__currency_id
 #: model:ir.model.fields,field_description:account.field_account_chart_template__currency_id
+#: model:ir.model.fields,field_description:account.field_account_invoice_report__currency_id
 #: model:ir.model.fields,field_description:account.field_account_journal__currency_id
 #: model:ir.model.fields,field_description:account.field_account_move__currency_id
 #: model:ir.model.fields,field_description:account.field_account_move_line__currency_id
@@ -6931,6 +6939,18 @@ msgstr "Döviz Kuru Farkı Kazanımı Hesabı"
 #: model:ir.model.fields,field_description:account.field_account_reconcile_model_template__payment_tolerance_param
 msgid "Gap"
 msgstr "Boşluk"
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
+msgid ""
+"Gaps due to canceled invoices, deleted entries or manual errors in open "
+"period."
+msgstr ""
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
+msgid "Gaps in the sequence"
+msgstr ""
 
 #. module: account
 #: model:ir.ui.menu,name:account.menu_finance_entries_generate_entries
@@ -11171,7 +11191,7 @@ msgstr "Ödeme Sonrası"
 #. module: account
 #: model:ir.actions.act_window,name:account.action_validate_account_move
 msgid "Post entries"
-msgstr "Onaylı Kayıtlar"
+msgstr "Kayıtları Onayla"
 
 #. module: account
 #: model:ir.model.fields.selection,name:account.selection__account_move__state__posted
@@ -12860,7 +12880,7 @@ msgstr "Satır alt toplamlarını vergsiiz olarak göster (B2B)"
 #: code:addons/account/models/company.py:0
 #, python-format
 msgid "Show unposted entries"
-msgstr "Gönderilmemiş girişleri göster"
+msgstr "Onaylanmamış kayıtları göster"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_config_settings__module_snailmail_account
@@ -13189,8 +13209,8 @@ msgstr "Hesabı Askıya Al"
 
 #. module: account
 #: model:ir.actions.server,name:account.action_move_switch_invoice_to_credit_note
-msgid "Switch into refund/credit note"
-msgstr "İade/fiyat farkına geçme"
+msgid "Switch into invoice/credit note"
+msgstr ""
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_payment_term_line__end_month
@@ -13829,13 +13849,6 @@ msgstr ""
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_payment_term.py:0
-#, python-format
-msgid "The Months and Days of the Payment Terms lines must be positive."
-msgstr "Ödeme Koşulları satırlarındaki Aylar ve Günler pozitif olmalıdır."
-
-#. module: account
-#. odoo-python
-#: code:addons/account/models/account_payment_term.py:0
 #: model_terms:ir.ui.view,arch_db:account.view_payment_term_form
 #, python-format
 msgid "The Payment Term must have one Balance line."
@@ -14354,7 +14367,7 @@ msgstr ""
 #, python-format
 msgid ""
 "The move could not be posted for the following reason: %(error_message)s"
-msgstr ""
+msgstr "Hareket aşağıdaki nedenden dolayı yayınlanamadı: %(error_message)s"
 
 #. module: account
 #. odoo-javascript
@@ -15330,7 +15343,6 @@ msgstr "Bugünkü Aktiviteler"
 #: code:addons/account/static/src/components/tax_totals/tax_totals.xml:0
 #: code:addons/account/static/src/xml/legacy_tax_totals.xml:0
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__amount_total
-#: model:ir.model.fields,field_description:account.field_account_invoice_report__price_total
 #: model:ir.model.fields,field_description:account.field_account_move__amount_total
 #: model:ir.model.fields,field_description:account.field_account_move_line__price_total
 #: model:ir.model.fields,field_description:account.field_account_payment__amount_total
@@ -15431,6 +15443,7 @@ msgid "Total amount you have to pay to this vendor."
 msgstr "Bu tedarikçiye ödenmesi gereken toplam meblağ."
 
 #. module: account
+#: model:ir.model.fields,field_description:account.field_account_invoice_report__price_total
 #: model_terms:ir.ui.view,arch_db:account.view_invoice_tree
 msgid "Total in Currency"
 msgstr "Para Birimi Cinsinden Toplam"
@@ -16943,6 +16956,13 @@ msgid ""
 msgstr ""
 "Bazı parçalı denkleştirmeler hâlâ beklemede olduğunda denkleştirmeyi önlemek"
 " için bir hesap değiştiremezsiniz."
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_account.py:0
+#, python-format
+msgid "You cannot switch the type of a posted document."
+msgstr ""
 
 #. module: account
 #. odoo-python

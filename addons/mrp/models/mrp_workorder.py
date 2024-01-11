@@ -324,7 +324,8 @@ class MrpWorkorder(models.Model):
     @api.depends('operation_id', 'workcenter_id', 'qty_production')
     def _compute_duration_expected(self):
         for workorder in self:
-            workorder.duration_expected = workorder._get_duration_expected()
+            if workorder.state not in ['done', 'cancel']:
+                workorder.duration_expected = workorder._get_duration_expected()
 
     @api.depends('time_ids.duration', 'qty_produced')
     def _compute_duration(self):
@@ -611,6 +612,11 @@ class MrpWorkorder(models.Model):
         if self.state in ('done', 'cancel'):
             return True
 
+        if self.production_id.state != 'progress':
+            self.production_id.write({
+                'date_start': datetime.now(),
+            })
+
         if self.product_tracking == 'serial' and self.qty_producing == 0:
             self.qty_producing = 1.0
         elif self.qty_producing == 0:
@@ -621,10 +627,6 @@ class MrpWorkorder(models.Model):
                 self._prepare_timeline_vals(self.duration, datetime.now())
             )
 
-        if self.production_id.state != 'progress':
-            self.production_id.write({
-                'date_start': datetime.now(),
-            })
         if self.state == 'progress':
             return True
         start_date = datetime.now()

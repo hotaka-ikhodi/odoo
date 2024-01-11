@@ -37,6 +37,9 @@ import { getNextTabableElement } from "@web/core/utils/ui";
 import { session } from "@web/session";
 import { KanbanAnimatedNumber } from "@web/views/kanban/kanban_animated_number";
 import { KanbanController } from "@web/views/kanban/kanban_controller";
+import { KanbanCompiler } from "@web/views/kanban/kanban_compiler";
+import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
+import { KanbanRecord } from "@web/views/kanban/kanban_record";
 import { kanbanView } from "@web/views/kanban/kanban_view";
 import { DynamicRecordList } from "@web/views/relational_model";
 import { ViewButton } from "@web/views/view_button/view_button";
@@ -537,6 +540,35 @@ QUnit.module("Views", (hooks) => {
         // changing its result.
         await validateSearch(target);
         assert.containsN(target, ".o_kanban_group:nth-child(2) .o_kanban_record", 3);
+    });
+
+    QUnit.test("basic grouped rendering with no record", async (assert) => {
+        serverData.models.partner.records = [];
+
+        await makeView({
+            type: "kanban",
+            resModel: "partner",
+            serverData,
+            arch: `
+                <kanban class="o_kanban_test">
+                    <field name="bar" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div>
+                                <field name="foo" />
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>`,
+            groupBy: ["bar"],
+        });
+        assert.containsOnce(target, ".o_kanban_grouped");
+        assert.containsOnce(target, ".o_view_nocontent");
+        assert.containsOnce(
+            target,
+            ".o-kanban-button-new",
+            "There should be a 'New' button even though there is no column when groupby is not a many2one"
+        );
     });
 
     QUnit.test(
@@ -3501,6 +3533,77 @@ QUnit.module("Views", (hooks) => {
         assert.containsOnce(target, ".o_kanban_quick_create:not(.o_disabled)");
     });
 
+    QUnit.test("quick create record and click Edit, name_create fails", async (assert) => {
+        Object.assign(serverData, {
+            views: {
+                "partner,false,kanban": `
+                    <kanban sample="1">
+                        <field name="product_id"/>
+                        <templates>
+                            <t t-name="kanban-box">
+                                <div><field name="name"/></div>
+                            </t>
+                        </templates>
+                    </kanban>`,
+                "partner,false,search": "<search/>",
+                "partner,false,list": '<tree><field name="foo"/></tree>',
+                "partner,false,form": `<form>
+                    <field name="product_id"/>
+                    <field name="foo"/>
+                </form>`,
+            },
+        });
+
+        const webClient = await createWebClient({
+            serverData,
+            async mockRPC(route, args) {
+                if (args.method === "name_create") {
+                    throw makeErrorFromResponse({
+                        code: 200,
+                        message: "Odoo Server Error",
+                        data: {
+                            name: "odoo.exceptions.UserError",
+                            debug: "traceback",
+                            arguments: ["This is a user error"],
+                            context: {},
+                        },
+                    });
+                }
+            },
+        });
+
+        await doAction(webClient, {
+            res_model: "partner",
+            type: "ir.actions.act_window",
+            views: [
+                [false, "kanban"],
+                [false, "form"],
+            ],
+            context: {
+                group_by: ["product_id"],
+            },
+        });
+
+        assert.containsN(target.querySelector(".o_kanban_group"), ".o_kanban_record", 2);
+
+        await quickCreateRecord(0);
+        assert.containsOnce(target.querySelector(".o_kanban_group"), ".o_kanban_quick_create");
+
+        await editQuickCreateInput("display_name", "test");
+        await editRecord();
+        assert.containsOnce(target, ".modal .o_form_view .o_form_editable");
+        assert.strictEqual(target.querySelector(".modal .o_field_many2one input").value, "hello");
+
+        // specify a name and save
+        await editInput(target, ".modal .o_field_widget[name=foo] input", "test");
+        await click(target, ".modal .o_form_button_save");
+        assert.containsNone(target, ".modal");
+        assert.containsN(target.querySelector(".o_kanban_group"), ".o_kanban_record", 3);
+        const firstRecord = target.querySelector(".o_kanban_group .o_kanban_record");
+        assert.strictEqual(firstRecord.innerText, "test");
+        assert.containsOnce(target, ".o_kanban_quick_create:not(.o_disabled)");
+    });
+
     QUnit.test("quick create record is re-enabled after discard on failure", async (assert) => {
         serverData.views["partner,false,form"] = `
             <form>
@@ -5176,21 +5279,21 @@ QUnit.module("Views", (hooks) => {
             assert.verifySteps(["resequence"]);
         }
     );
-    
+
     QUnit.test("Ensuring each progress bar has some space", async (assert) => {
         serverData.models.partner.records = [
-            ({
+            {
                 id: 1,
                 foo: "blip",
                 state: "def",
-            }),
-            ({
+            },
+            {
                 id: 2,
                 foo: "blip",
                 state: "abc",
-            }),
+            },
         ];
-        
+
         for (let i = 0; i < 20; i++) {
             serverData.models.partner.records.push({
                 id: 3 + i,
@@ -5198,7 +5301,7 @@ QUnit.module("Views", (hooks) => {
                 state: "ghi",
             });
         }
-        
+
         await makeView({
             type: "kanban",
             resModel: "partner",
@@ -5508,8 +5611,8 @@ QUnit.module("Views", (hooks) => {
             arch: `
                 <kanban create="0">
                     <templates>
-                        <t t-name="kanban-box">>
-                            <div><field name="foo"/></div>>
+                        <t t-name="kanban-box">
+                            <div><field name="foo"/></div>
                         </t>
                     </templates>
                 </kanban>`,
@@ -5517,6 +5620,8 @@ QUnit.module("Views", (hooks) => {
         });
 
         assert.containsNone(target, ".o-kanban-button-new");
+        assert.containsN(target, ".o_kanban_group", 2);
+        assert.containsNone(target, ".o_kanban_quick_add");
     });
 
     QUnit.test("clicking on a link triggers correct event", async (assert) => {
@@ -8598,13 +8703,15 @@ QUnit.module("Views", (hooks) => {
             "first column should have a default title for when no value is provided"
         );
         assert.ok(
-            !target.querySelector(".o_kanban_group:first-child .o_kanban_header_title .o_column_title").dataset
-                .tooltipInfo,
+            !target.querySelector(
+                ".o_kanban_group:first-child .o_kanban_header_title .o_column_title"
+            ).dataset.tooltipInfo,
             "tooltip of first column should not defined, since group_by_tooltip title and the many2one field has no value"
         );
         assert.ok(
-            !target.querySelector(".o_kanban_group:first-child .o_kanban_header_title .o_column_title").dataset
-                .tooltipTemplate,
+            !target.querySelector(
+                ".o_kanban_group:first-child .o_kanban_header_title .o_column_title"
+            ).dataset.tooltipTemplate,
             "tooltip of first column should not defined, since group_by_tooltip title and the many2one field has no value"
         );
         assert.strictEqual(
@@ -8613,14 +8720,16 @@ QUnit.module("Views", (hooks) => {
             "second column should have a title with a value from the many2one"
         );
         assert.strictEqual(
-            target.querySelector(".o_kanban_group:nth-child(2) .o_kanban_header_title .o_column_title").dataset
-                .tooltipInfo,
+            target.querySelector(
+                ".o_kanban_group:nth-child(2) .o_kanban_header_title .o_column_title"
+            ).dataset.tooltipInfo,
             `{"entries":[{"title":"Kikou","value":"hello"}]}`,
             "second column should have a tooltip with the group_by_tooltip title and many2one field value"
         );
         assert.strictEqual(
-            target.querySelector(".o_kanban_group:nth-child(2) .o_kanban_header_title .o_column_title").dataset
-                .tooltipTemplate,
+            target.querySelector(
+                ".o_kanban_group:nth-child(2) .o_kanban_header_title .o_column_title"
+            ).dataset.tooltipTemplate,
             "web.KanbanGroupTooltip",
             "second column should have a tooltip with the group_by_tooltip title and many2one field value"
         );
@@ -8660,7 +8769,9 @@ QUnit.module("Views", (hooks) => {
             null
         );
         assert.strictEqual(
-            target.querySelectorAll(".o_kanban_header_title .o_column_title")[0].getAttribute("data-tooltip-info"),
+            target
+                .querySelectorAll(".o_kanban_header_title .o_column_title")[0]
+                .getAttribute("data-tooltip-info"),
             null
         );
         assert.strictEqual(
@@ -8670,7 +8781,9 @@ QUnit.module("Views", (hooks) => {
             null
         );
         assert.strictEqual(
-            target.querySelectorAll(".o_kanban_header_title .o_column_title")[1].getAttribute("data-tooltip-info"),
+            target
+                .querySelectorAll(".o_kanban_header_title .o_column_title")[1]
+                .getAttribute("data-tooltip-info"),
             null
         );
         prom.resolve();
@@ -8689,11 +8802,15 @@ QUnit.module("Views", (hooks) => {
             "web.KanbanGroupTooltip"
         );
         assert.strictEqual(
-            target.querySelectorAll(".o_kanban_header_title .o_column_title")[0].getAttribute("data-tooltip-info"),
+            target
+                .querySelectorAll(".o_kanban_header_title .o_column_title")[0]
+                .getAttribute("data-tooltip-info"),
             '{"entries":[{"title":"Name","value":"hello"}]}'
         );
         assert.strictEqual(
-            target.querySelectorAll(".o_kanban_header_title .o_column_title")[1].getAttribute("data-tooltip-info"),
+            target
+                .querySelectorAll(".o_kanban_header_title .o_column_title")[1]
+                .getAttribute("data-tooltip-info"),
             '{"entries":[{"title":"Name","value":"xmo"}]}'
         );
     });
@@ -8752,11 +8869,15 @@ QUnit.module("Views", (hooks) => {
         await nextTick();
 
         assert.strictEqual(
-            target.querySelectorAll(".o_kanban_header_title .o_column_title")[0].getAttribute("data-tooltip-info"),
+            target
+                .querySelectorAll(".o_kanban_header_title .o_column_title")[0]
+                .getAttribute("data-tooltip-info"),
             '{"entries":[{"title":"Name","value":"hello"}]}'
         );
         assert.strictEqual(
-            target.querySelectorAll(".o_kanban_header_title .o_column_title")[1].getAttribute("data-tooltip-info"),
+            target
+                .querySelectorAll(".o_kanban_header_title .o_column_title")[1]
+                .getAttribute("data-tooltip-info"),
             '{"entries":[{"title":"Name","value":"xm"}]}'
         );
     });
@@ -12935,13 +13056,13 @@ QUnit.module("Views", (hooks) => {
             groupBy: ["state"],
         });
 
-        const controller = target.querySelector('.o_view_controller');
+        const controller = target.querySelector(".o_view_controller");
         controller.setAttribute("style", "max-width:900px; min-width: 900px;");
         const content = target.querySelector(".o_content");
         content.setAttribute("style", "max-width:600px; min-width: 600px;");
-        const renderer = target.querySelector('.o_kanban_renderer');
+        const renderer = target.querySelector(".o_kanban_renderer");
         renderer.setAttribute("style", "overflow: visible;");
-        for (const kanbanGroup of target.querySelectorAll('.o_kanban_group')) {
+        for (const kanbanGroup of target.querySelectorAll(".o_kanban_group")) {
             kanbanGroup.setAttribute("style", "max-width: 300px; min-width: 300px; padding: 0;");
         }
 
@@ -12967,7 +13088,7 @@ QUnit.module("Views", (hooks) => {
         const dragged = target.querySelector(".o_kanban_record.o_dragged");
         const sibling = target.querySelector(".o_kanban_group:nth-child(3) .o_kanban_record");
         // Ensure that no rotation is applied on the element
-        dragged.style.transform = 'none';
+        dragged.style.transform = "none";
         // Verify that the dragged element is allowed to go inside the
         // overflowing part of the draggable container.
         assert.strictEqual(
@@ -13236,18 +13357,20 @@ QUnit.module("Views", (hooks) => {
         assert.notEqual(previousScrollTop, 0, "Should not have the scrollTop value at 0");
     });
 
-    QUnit.test("Kanban: no reset of the groupby when a non-empty column is deleted", async (assert) => {
-        let dialogProps;
+    QUnit.test(
+        "Kanban: no reset of the groupby when a non-empty column is deleted",
+        async (assert) => {
+            let dialogProps;
 
-        patchDialog((_cls, props) => {
-            dialogProps = props;
-        });
+            patchDialog((_cls, props) => {
+                dialogProps = props;
+            });
 
-        await makeView({
-            type: "kanban",
-            resModel: "partner",
-            serverData,
-            arch: `
+            await makeView({
+                type: "kanban",
+                resModel: "partner",
+                serverData,
+                arch: `
                 <kanban default_group_by="product_id">
                     <field name="foo"/>
                     <field name="product_id"/>
@@ -13258,53 +13381,125 @@ QUnit.module("Views", (hooks) => {
                         </t>
                     </templates>
                 </kanban>`,
-            searchViewArch: `
+                searchViewArch: `
             <search>
                 <filter name="groupby_category" string="Category" context="{'group_by': 'category_ids'}"/>
             </search>
             `,
+            });
+            await toggleFilterMenu(target);
+            // select the groupby:category_ids filter
+            await click(target.querySelector(".o_group_by_menu .dropdown-toggle"));
+            await click(target.querySelector(".o_group_by_menu .o_menu_item"));
+            // check the initial rendering
+            assert.containsN(target, ".o_kanban_group", 3, "should have three columns");
+            // check availability of delete action in kanban header's config dropdown
+            await toggleColumnActions(2);
+            assert.containsOnce(
+                getColumn(2),
+                ".o_column_delete",
+                "should be able to delete the column"
+            );
+            // delete second column (first cancel the confirm request, then confirm)
+            let clickColumnAction = await toggleColumnActions(1);
+            await clickColumnAction("Delete");
+            dialogProps.cancel();
+            await nextTick();
+
+            assert.strictEqual(
+                getColumn(1).querySelector(".o_column_title").innerText,
+                "gold",
+                'column [6, "gold"] should still be there'
+            );
+
+            dialogProps.confirm();
+            await nextTick();
+
+            clickColumnAction = await toggleColumnActions(1);
+            await clickColumnAction("Delete");
+
+            assert.strictEqual(
+                getColumn(1).querySelector(".o_column_title").innerText,
+                "silver",
+                'last column should now be [7, "silver"]'
+            );
+            assert.containsN(target, ".o_kanban_group", 2, "should now have two columns");
+            assert.strictEqual(
+                getColumn(0).querySelector(".o_column_title").innerText,
+                "None (3)",
+                "first column should have no id (Undefined column)"
+            );
+        }
+    );
+
+    QUnit.test("kanbans with basic and custom compiler, same arch", async (assert) => {
+        // In this test, the exact same arch will be rendered by 2 different kanban renderers:
+        // once with the basic one, and once with a custom renderer having a custom compiler. The
+        // purpose of the test is to ensure that the template is compiled twice, once by each
+        // compiler, even though the arch is the same.
+        class MyKanbanCompiler extends KanbanCompiler {
+            setup() {
+                super.setup();
+                this.compilers.push({ selector: "div", fn: this.compileDiv });
+            }
+
+            compileDiv(node, params) {
+                const compiledNode = this.compileGenericNode(node, params);
+                compiledNode.setAttribute("class", "my_kanban_compiler");
+                return compiledNode;
+            }
+        }
+        class MyKanbanRecord extends KanbanRecord {}
+        MyKanbanRecord.Compiler = MyKanbanCompiler;
+        class MyKanbanRenderer extends KanbanRenderer {}
+        MyKanbanRenderer.components = {
+            ...KanbanRenderer.components,
+            KanbanRecord: MyKanbanRecord,
+        };
+        viewRegistry.add("my_kanban", {
+            ...kanbanView,
+            Renderer: MyKanbanRenderer,
         });
-        await toggleFilterMenu(target);
-        // select the groupby:category_ids filter
-        await click(target.querySelector('.o_group_by_menu .dropdown-toggle'));
-        await click(target.querySelector('.o_group_by_menu .o_menu_item'));
-        // check the initial rendering
-        assert.containsN(target, ".o_kanban_group", 3, "should have three columns");
-        // check availability of delete action in kanban header's config dropdown
-        await toggleColumnActions(2);
-        assert.containsOnce(
-            getColumn(2),
-            ".o_column_delete",
-            "should be able to delete the column"
-        );
-        // delete second column (first cancel the confirm request, then confirm)
-        let clickColumnAction = await toggleColumnActions(1);
-        await clickColumnAction("Delete");
-        dialogProps.cancel();
-        await nextTick();
 
-        assert.strictEqual(
-            getColumn(1).querySelector(".o_column_title").innerText,
-            "gold",
-            'column [6, "gold"] should still be there'
-        );
+        serverData.models.partner.fields.one2many = {
+            type: "one2many",
+            name: "o2m",
+            relation: "partner",
+        };
+        serverData.models.partner.records[0].one2many = [1];
+        serverData.views = {
+            "partner,false,form": `<form><field name="one2many" mode="kanban"/></form>`,
+            "partner,false,search": `<search/>`,
+            "partner,false,kanban": `<kanban js_class="my_kanban">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click"><field name="foo"/></div>
+                    </t>
+                </templates>
+            </kanban>`,
+        };
 
-        dialogProps.confirm();
-        await nextTick();
+        const webClient = await createWebClient({ serverData });
+        await doAction(webClient, {
+            res_model: "partner",
+            type: "ir.actions.act_window",
+            views: [
+                [false, "kanban"],
+                [false, "form"],
+            ],
+        });
 
-        clickColumnAction = await toggleColumnActions(1);
-        await clickColumnAction("Delete");
+        // main kanban, custom view
+        assert.containsOnce(target, ".o_kanban_view");
+        assert.containsN(target, ".my_kanban_compiler", 4);
 
-        assert.strictEqual(
-            getColumn(1).querySelector(".o_column_title").innerText,
-            "silver",
-            'last column should now be [7, "silver"]'
-        );
-        assert.containsN(target, ".o_kanban_group", 2, "should now have two columns");
-        assert.strictEqual(
-            getColumn(0).querySelector(".o_column_title").innerText,
-            "None (3)",
-            "first column should have no id (Undefined column)"
-        );
+        // switch to form
+        await click(target.querySelector(".o_kanban_record"));
+        assert.containsOnce(target, ".o_form_view");
+        assert.containsOnce(target, ".o_form_view .o_field_widget[name=one2many]");
+
+        // x2many kanban, basic renderer
+        assert.containsOnce(target, ".o_kanban_record:not(.o_kanban_ghost)");
+        assert.containsNone(target, ".my_kanban_compiler");
     });
 });

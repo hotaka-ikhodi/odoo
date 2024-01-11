@@ -2428,7 +2428,7 @@ msgstr "Jeton d'invitation"
 #. module: survey
 #: model:ir.model.fields.selection,name:survey.selection__survey_survey__access_mode__token
 msgid "Invited people only"
-msgstr "Seulement les personnes invitées"
+msgstr "Seules les personnes invitées"
 
 #. module: survey
 #: model:ir.model.fields,field_description:survey.field_survey_invite__is_mail_template_editor
@@ -3769,7 +3769,7 @@ msgstr "Récompenser les réponses rapides"
 #. module: survey
 #: model_terms:ir.ui.view,arch_db:survey.gamification_badge_form_view_simplified
 msgid "Rewards for challenges"
-msgstr "Récompenses pour les défis"
+msgstr "Récompenser les défis"
 
 #. module: survey
 #: model:ir.model.fields,field_description:survey.field_survey_user_input_line__matrix_row_id
