@@ -29,7 +29,7 @@ import { browser } from "@web/core/browser/browser";
 import { WarningDialog } from "@web/core/errors/error_dialogs";
 import { errorService } from "@web/core/errors/error_service";
 import { localization } from "@web/core/l10n/localization";
-import { RPCError } from "@web/core/network/rpc_service";
+import { makeErrorFromResponse, RPCError } from "@web/core/network/rpc_service";
 import { registry } from "@web/core/registry";
 import { scrollerService } from "@web/core/scroller_service";
 import { tooltipService } from "@web/core/tooltip/tooltip_service";
@@ -11388,6 +11388,80 @@ QUnit.module("Views", (hooks) => {
         );
     });
 
+    QUnit.test("resequence list lines when previous resequencing crashed", async function (assert) {
+        serviceRegistry.add("error", errorService);
+        let onChangeCount = 0;
+        serverData.models.partner.onchanges = {
+            int_field: function (obj) {
+                if (obj.display_name === "first line") {
+                    if (onChangeCount === 0) {
+                        onChangeCount += 1;
+                        assert.step("resequence onChange crash")
+                        throw makeErrorFromResponse({
+                            code: 200,
+                            message: "Odoo Server Error",
+                            data: {
+                                name: `odoo.exceptions.${"UserError"}`,
+                                debug: "traceback",
+                                arguments: [],
+                                context: {},
+                                message: "error",
+                            },
+                        });
+                    } else {
+                        assert.step("resequence onChange ok");
+                    }
+                }
+            },
+        };
+
+        serverData.views = {
+            "partner,false,list": `
+                <tree editable="bottom">
+                    <field name="int_field" widget="handle"/>
+                    <field name="display_name" required="1"/>
+                </tree>`,
+        };
+
+        await makeView({
+            type: "form",
+            resModel: "partner",
+            resId: 1,
+            serverData,
+            arch: `<form><field name="foo"/><field name="p"/></form>`,
+        });
+
+        // Add two lines
+        await click(target.querySelector(".o_field_x2many_list_row_add a"));
+        await editInput(target, `.o_field_cell [name="display_name"] input`, "first line");
+        await nextTick();
+        await click(target.querySelector(".o_field_x2many_list_row_add a"));
+        await editInput(target, ".o_selected_row input", "second line");
+        await click(target.querySelector(".o_form_button_save"));
+        await nextTick();
+
+        let getNames = () => [...target.querySelectorAll(".o_list_char")].map((el) => el.textContent)
+        assert.deepEqual(getNames(), ["first line", "second line"])
+
+        // drag and drop first line to the second, should crash because of onchange
+        await dragAndDrop(
+            "tbody.ui-sortable tr:nth-child(1) .o_handle_cell",
+            "tbody.ui-sortable tr:nth-child(2)"
+        );
+        await nextTick();
+        assert.deepEqual(getNames(), ["first line", "second line"])
+
+        // drag and drop first line to the second, should work
+        await dragAndDrop(
+            "tbody.ui-sortable tr:nth-child(1) .o_handle_cell",
+            "tbody.ui-sortable tr:nth-child(2)"
+        );
+        await nextTick();
+        assert.deepEqual(getNames(), ["second line", "first line"])
+
+        assert.verifySteps(["resequence onChange crash", "resequence onChange ok"]);
+    });
+
     QUnit.test(
         "reload company when creating records of model res.company",
         async function (assert) {
@@ -13575,47 +13649,6 @@ QUnit.module("Views", (hooks) => {
             await click(target, ".o_form_button_save");
         }
     );
-
-    QUnit.test("containing a nested x2many list view should not overflow", async function (assert) {
-        serverData.models.partner_type.records.push({
-            id: 3,
-            display_name: "very".repeat(30) + "_long_name",
-            color: 10,
-        });
-
-        const record = serverData.models.partner.records[0];
-        record.timmy = [3];
-
-        await makeView({
-            type: "form",
-            resModel: "partner",
-            resId: record.id,
-            serverData,
-            arch: `
-            <form>
-                <sheet>
-                    <group>
-                        <group/>
-                        <group>
-                            <field name="timmy" widget="many2many">
-                                <tree>
-                                    <field name="display_name"/>
-                                    <field name="color"/>
-                                </tree>
-                            </field>
-                        </group>
-                    </group>
-                </sheet>
-            </form>`,
-        });
-
-        const table = target.querySelector("table");
-        const group = target.querySelector(".o_inner_group:last-child");
-
-        assert.equal(group.clientWidth, group.scrollWidth);
-        table.style.tableLayout = "auto";
-        assert.ok(group.clientWidth < group.scrollWidth);
-    });
 
     QUnit.test(
         "reload records in the context of the form to avoid having partial field values",

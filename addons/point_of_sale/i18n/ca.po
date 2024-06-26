@@ -24,11 +24,11 @@
 # RGB Consulting <odoo@rgbconsulting.com>, 2022
 # Ivan Espinola, 2023
 # marcescu, 2023
+# Óscar Fonseca <tecnico@pyming.com>, 2023
 # Quim - eccit <quim@eccit.com>, 2023
 # martioodo hola, 2023
 # Jonatan Gk, 2023
 # Albert Parera, 2023
-# Óscar Fonseca <tecnico@pyming.com>, 2023
 # Josep Anton Belchi, 2023
 # Harcogourmet, 2024
 # 
@@ -976,13 +976,10 @@ msgstr "Buffer:"
 #: model:ir.model.fields,help:point_of_sale.field_pos_config__limited_partners_loading
 #: model:ir.model.fields,help:point_of_sale.field_res_config_settings__pos_limited_partners_loading
 msgid ""
-"By default, 100 partners are loaded.\n"
+"By default, 10000 partners are loaded.\n"
 "When the session is open, we keep on loading all remaining partners in the background.\n"
 "In the meantime, you can use the 'Load Customers' button to load partners from database."
 msgstr ""
-"Per defecte, 100 contactes són carregats.\n"
-"Quan la sessio aquesta oberta, continuarem carregant els contactes restants en el fons.\n"
-"Al mateix temps, pots usar el botó de \"carregar clients\" per a carregar els contactes des del base de dades."
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config__iface_print_via_proxy
@@ -6515,12 +6512,8 @@ msgstr ""
 #, python-format
 msgid ""
 "The maximum difference allowed is %s.\n"
-"\n"
-"                        Please contact your manager to accept the closing difference."
+"Please contact your manager to accept the closing difference."
 msgstr ""
-"La diferència màxima permesa és %s.\n"
-"\n"
-"                        Contacteu amb el vostre gestor per acceptar la diferència de tancament."
 
 #. module: point_of_sale
 #. odoo-python

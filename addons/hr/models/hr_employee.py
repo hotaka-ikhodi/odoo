@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
+import pytz
 from pytz import UTC
 from datetime import datetime, time
 from random import choice
@@ -240,6 +241,14 @@ class HrEmployeePrivate(models.Model):
         if self.check_access_rights('read', raise_exception=False):
             return super().get_view(view_id, view_type, **options)
         return self.env['hr.employee.public'].get_view(view_id, view_type, **options)
+
+    @api.model
+    def get_views(self, views, options):
+        if self.check_access_rights('read', raise_exception=False):
+            return super().get_views(views, options)
+        res = self.env['hr.employee.public'].get_views(views, options)
+        res['models'].update({'hr.employee': res['models']['hr.employee.public']})
+        return res
 
     @api.model
     def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
@@ -509,6 +518,19 @@ class HrEmployeePrivate(models.Model):
             datetime.combine(fields.Date.from_string(date_from), time.min).replace(tzinfo=UTC),
             datetime.combine(fields.Date.from_string(date_to), time.max).replace(tzinfo=UTC)
         )
+
+    def _get_expected_attendances(self, date_from, date_to, domain=None):
+        self.ensure_one()
+        employee_timezone = pytz.timezone(self.tz) if self.tz else None
+        calendar = self.resource_calendar_id or self.company_id.resource_calendar_id
+        calendar_intervals = calendar._work_intervals_batch(
+            date_from,
+            date_to,
+            tz=employee_timezone,
+            resources=self.resource_id,
+            compute_leaves=True,
+            domain=domain)[self.resource_id.id]
+        return calendar_intervals
 
     # ---------------------------------------------------------
     # Messaging

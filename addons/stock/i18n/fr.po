@@ -9,6 +9,7 @@
 # Maruan Aguerdouh, 2023
 # Wil Odoo, 2024
 # Jolien De Paepe, 2024
+# Manon Rondou, 2024
 # 
 msgid ""
 msgstr ""
@@ -16,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-06 13:31+0000\n"
 "PO-Revision-Date: 2022-09-22 05:55+0000\n"
-"Last-Translator: Jolien De Paepe, 2024\n"
+"Last-Translator: Manon Rondou, 2024\n"
 "Language-Team: French (https://app.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1826,6 +1827,11 @@ msgstr ""
 "unités."
 
 #. module: stock
+#: model:ir.actions.server,name:stock.stock_quant_stock_move_line_desynchronization
+msgid "Correct inconsistencies for reservation"
+msgstr "Corriger les erreurs de réservation"
+
+#. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location__posx
 msgid "Corridor (X)"
 msgstr "Couloir (X)"
@@ -2999,6 +3005,13 @@ msgid "First SN"
 msgstr "Premier numéro de série"
 
 #. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Fix discrepancies"
+msgstr "Corriger les anomalies"
+
+#. module: stock
 #: model:ir.model.fields.selection,name:stock.selection__stock_rule__group_propagation_option__fixed
 msgid "Fixed"
 msgstr "Fixe"
@@ -4064,10 +4077,28 @@ msgstr ""
 #: code:addons/stock/models/stock_quant.py:0
 #, python-format
 msgid ""
-"It is not possible to unreserve more products of %s than you have in stock."
+"It is not possible to reserve more products of %s than you have in stock.\n"
+"\n"
+"You can fix the discrepancies by clicking on the button below.\n"
+"The correction will remove the reservation of the impacted operations on all companies.\n"
+"If the error persists, or you see this message appear often, please submit a Support Ticket at https://www.odoo.com/help"
 msgstr ""
-"La quantité de %s débloquée ne peut pas être supérieure à la quantité en "
-"stock."
+"Il n'est pas possible de réserver plus de produits %s que la quantité en stock.\n"
+"\n"
+"Cliquez sur le bouton ci-dessous pour corriger les incohérences.\n"
+"La correction permettra de supprimer la réservation des opérations concernées dans toutes les entreprises..\n"
+"Si l'erreur persiste ou si ce message apparait régulièrement, veuillez soumettre un ticket d'assistance à l'adresse suivante : https://www.odoo.com/help."
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"It is not possible to unreserve more products of %s than you have in stock.\n"
+"Please contact your system administrator to rectify this issue."
+msgstr ""
+"Il n'est pas possible de déréserver plus de produits %s que la quantité en stock.\n"
+"Veuillez contacter votre administrateur système pour résoudre ce problème."
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_picking__move_type
@@ -4498,6 +4529,13 @@ msgstr "Emplacement : Si entrée dans"
 #, python-format
 msgid "Locations"
 msgstr "Emplacements"
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_picking.py:0
+#, python-format
+msgid "Locations to update"
+msgstr "Emplacements à mettre à jour"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
@@ -7186,6 +7224,14 @@ msgid ""
 msgstr ""
 "Des routes seront créées pour ces entrepôts de réapprovisionnement et vous "
 "pourrez les activer au niveau des produits et catégories de produits"
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_location.py:0
+#: code:addons/stock/models/stock_rule.py:0
+#, python-format
+msgid "Rule %s belongs to %s while the route belongs to %s."
+msgstr "La règle %s appartient à %s tandis que la route appartient à %s."
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_rule__rule_message
@@ -10089,6 +10135,28 @@ msgid ""
 msgstr ""
 "Vous ne pouvez pas transférer le même contenu de colis plus d'une fois pour "
 "un même transfert ou diviser le même colis sur deux emplacements."
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You cannot pack products into the same package when they are from both "
+"immediate and planned transfers."
+msgstr ""
+"Il n'est pas possible de regrouper des produits dans un même colis s'ils "
+"proviennent de transferts immédiats et planifiés."
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You cannot pack products into the same package when they are from different "
+"transfers with different operation types."
+msgstr ""
+"Il n'est pas possible de regrouper des produits dans un même colis s'ils "
+"proviennent de différents transferts avec des types d'opération différents."
 
 #. module: stock
 #. odoo-python

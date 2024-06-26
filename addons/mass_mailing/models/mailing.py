@@ -87,7 +87,7 @@ class MassMailing(models.Model):
     email_from = fields.Char(
         string='Send From',
         compute='_compute_email_from', readonly=False, required=True, store=True,
-        default=lambda self: self.env.user.email_formatted)
+        precompute=True)
     favorite = fields.Boolean('Favorite', copy=False, tracking=True)
     favorite_date = fields.Datetime(
         'Favorite Date',
@@ -238,12 +238,12 @@ class MassMailing(models.Model):
                     _("The saved filter targets different recipients and is incompatible with this mailing.")
                 )
 
-    @api.depends('mail_server_id')
+    @api.depends('mail_server_id', 'create_uid')
     def _compute_email_from(self):
-        user_email = self.env.user.email_formatted
         notification_email = self.env['ir.mail_server']._get_default_from_address()
 
         for mailing in self:
+            user_email = mailing.create_uid.email_formatted or self.env.user.email_formatted
             server = mailing.mail_server_id
             if not server:
                 mailing.email_from = mailing.email_from or user_email
@@ -1002,6 +1002,19 @@ class MassMailing(models.Model):
         done_res_ids = {record['res_id'] for record in already_mailed}
         return [rid for rid in res_ids if rid not in done_res_ids]
 
+    def _get_unsubscribe_oneclick_url(self, email_to, res_id):
+        url = werkzeug.urls.url_join(
+            self.get_base_url(), 'mail/mailing/%(mailing_id)s/unsubscribe_oneclick?%(params)s' % {
+                'mailing_id': self.id,
+                'params': werkzeug.urls.url_encode({
+                    'res_id': res_id,
+                    'email': email_to,
+                    'token': self._unsubscribe_token(res_id, email_to),
+                }),
+            }
+        )
+        return url
+
     def _get_unsubscribe_url(self, email_to, res_id):
         url = werkzeug.urls.url_join(
             self.get_base_url(), 'mail/mailing/%(mailing_id)s/unsubscribe?%(params)s' % {
@@ -1410,6 +1423,9 @@ class MassMailing(models.Model):
                 )
 
             return content
+        except UnidentifiedImageError:
+            _logger.warning('This file could not be decoded as an image file.', exc_info=True)
+            raise
         except Exception as e:
             _logger.exception(e)
             raise ImportValidationError(_("Could not retrieve URL: %s", url)) from e

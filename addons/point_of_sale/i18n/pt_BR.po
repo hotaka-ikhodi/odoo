@@ -960,13 +960,10 @@ msgstr "Buffer:"
 #: model:ir.model.fields,help:point_of_sale.field_pos_config__limited_partners_loading
 #: model:ir.model.fields,help:point_of_sale.field_res_config_settings__pos_limited_partners_loading
 msgid ""
-"By default, 100 partners are loaded.\n"
+"By default, 10000 partners are loaded.\n"
 "When the session is open, we keep on loading all remaining partners in the background.\n"
 "In the meantime, you can use the 'Load Customers' button to load partners from database."
 msgstr ""
-"Por padrão, 100 parceiros são carregados.\n"
-"Quando a sessão está aberta, continuamos a carregar todos os parceiros restantes em segundo plano.\n"
-"Enquanto isso, você pode usar o botão \"Carregar clientes\" para carregar parceiros do banco de dados."
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config__iface_print_via_proxy
@@ -3803,6 +3800,7 @@ msgstr ""
 #, python-format
 msgid "Only administrators can edit receipt headers and footers"
 msgstr ""
+"Somente os administradores podem editar cabeçalhos e rodapés de recibos"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config__only_round_cash_method
@@ -6486,12 +6484,10 @@ msgstr ""
 #, python-format
 msgid ""
 "The maximum difference allowed is %s.\n"
-"\n"
-"                        Please contact your manager to accept the closing difference."
+"Please contact your manager to accept the closing difference."
 msgstr ""
 "A diferença máxima permitida é %s.\n"
-"\n"
-"                        Entre em contato com seu gerente para aceitar a diferença de fechamento."
+"Entre em contato com o seu gerente para aceitar a diferença de fechamento."
 
 #. module: point_of_sale
 #. odoo-python
@@ -7031,7 +7027,7 @@ msgstr "Para reembolsar:%s"
 #: model:ir.model.fields,field_description:point_of_sale.field_product_product__to_weight
 #: model:ir.model.fields,field_description:point_of_sale.field_product_template__to_weight
 msgid "To Weigh With Scale"
-msgstr "Para Pesar Com Escala"
+msgstr "Pesar com balança"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order__to_invoice

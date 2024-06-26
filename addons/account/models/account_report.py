@@ -707,24 +707,6 @@ class AccountReportExpression(models.Model):
 
         return auto_chosen_target
 
-    def action_view_carryover_lines(self, options, column_group_key=None):
-        if column_group_key:
-            options = self.report_line_id.report_id._get_column_group_options(options, column_group_key)
-
-        date_from, date_to, dummy = self.report_line_id.report_id._get_date_bounds_info(options, self.date_scope)
-
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Carryover lines for: %s', self.report_line_name),
-            'res_model': 'account.report.external.value',
-            'views': [(self.env.ref('account_reports.account_report_external_value_tree').id, 'list')],
-            'domain': [
-                ('target_report_expression_id', '=', self.id),
-                ('date', '>=', date_from),
-                ('date', '<=', date_to),
-            ],
-        }
-
 
 class AccountReportColumn(models.Model):
     _name = "account.report.column"
@@ -751,7 +733,7 @@ class AccountReportExternalValue(models.Model):
     value = fields.Float(required=True)
     date = fields.Date(required=True)
 
-    target_report_expression_id = fields.Many2one(string="Target Expression", comodel_name="account.report.expression", required=True)
+    target_report_expression_id = fields.Many2one(string="Target Expression", comodel_name="account.report.expression", required=True, ondelete="cascade")
     target_report_line_id = fields.Many2one(string="Target Line", related="target_report_expression_id.report_line_id")
     target_report_expression_label = fields.Char(string="Target Expression Label", related="target_report_expression_id.label")
     report_country_id = fields.Many2one(string="Country", related='target_report_line_id.report_id.country_id')

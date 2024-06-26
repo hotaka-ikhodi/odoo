@@ -120,6 +120,24 @@ class MailMail(models.Model):
     def _search_body_content(self, operator, value):
         return [('body_html', operator, value)]
 
+    @api.model
+    def fields_get(self, *args, **kwargs):
+        # related selection will fetch translations from DB
+        # selections added in stable won't be in DB -> add them on the related model if not already added
+        message_type_field = self.env['mail.message']._fields['message_type']
+        if 'auto_comment' not in {value for value, name in message_type_field.get_description(self.env)['selection']}:
+            self._fields_get_message_type_update_selection(message_type_field.selection)
+        return super().fields_get(*args, **kwargs)
+
+    def _fields_get_message_type_update_selection(self, selection):
+        """Update the field selection for message type on mail.message to match the runtime values.
+
+        DO NOT USE it is only there for a stable fix and should not be used for any reason other than hotfixing.
+        """
+        self.env['ir.model.fields'].invalidate_model(['selection_ids'])
+        self.env['ir.model.fields.selection'].sudo()._update_selection('mail.message', 'message_type', selection)
+        self.env.registry.clear_caches()
+
     @api.model_create_multi
     def create(self, values_list):
         # notification field: if not set, set if mail comes from an existing mail.message
@@ -512,6 +530,16 @@ class MailMail(models.Model):
                 # TDE note: could be great to pre-detect missing to/cc and skip sending it
                 # to go directly to failed state update
                 for email in email_list:
+                    # support headers specific to the specific outgoing email
+                    if email.get('headers'):
+                        email_headers = headers.copy()
+                        try:
+                            email_headers.update(email.get('headers'))
+                        except Exception:  # noqa: BLE001
+                            pass
+                    else:
+                        email_headers = headers
+
                     msg = IrMailServer.build_email(
                         email_from=email_from,
                         email_to=email.get('email_to'),
@@ -526,7 +554,7 @@ class MailMail(models.Model):
                         object_id=mail.res_id and ('%s-%s' % (mail.res_id, mail.model)),
                         subtype='html',
                         subtype_alternative='plain',
-                        headers=headers)
+                        headers=email_headers)
                     processing_pid = email.pop("partner_id", None)
                     try:
                         res = IrMailServer.send_email(

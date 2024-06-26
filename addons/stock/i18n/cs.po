@@ -3,7 +3,6 @@
 # 	* stock
 # 
 # Translators:
-# Jakub Snášel <jakub@potisk-tricek.cz>, 2022
 # David Kliment <daklime@gmail.com>, 2022
 # Pauline Thiry <pth@odoo.com>, 2022
 # Tomas Bosek, 2022
@@ -19,8 +18,8 @@
 # Petr Hemza, 2023
 # SlavekB <slavek.banko@axis.cz>, 2023
 # Jiří Podhorecký, 2023
-# Jakub Smolka, 2023
 # Tomáš Píšek, 2023
+# Jakub Smolka, 2024
 # Aleš Fiala <f.ales1@seznam.cz>, 2024
 # 
 msgid ""
@@ -452,7 +451,7 @@ msgstr "<i class=\"fa fa-clock-o\" role=\"img\" aria-label=\"Date\" title=\"Datu
 msgid "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" title=\"Manage\"/>"
 msgstr ""
 "<i class=\"fa fa-ellipsis-v\" role=\"img\" aria-label=\"Manage\" "
-"title=\"Manage\"/>Prodej"
+"title=\"Spravovat\"/>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.report_picking
@@ -1826,6 +1825,11 @@ msgstr ""
 "kategorie. Převod bude proveden na základě vzájemných poměrů."
 
 #. module: stock
+#: model:ir.actions.server,name:stock.stock_quant_stock_move_line_desynchronization
+msgid "Correct inconsistencies for reservation"
+msgstr "Opravte nesrovnalosti pro rezervaci"
+
+#. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location__posx
 msgid "Corridor (X)"
 msgstr "Chodba (X)"
@@ -2989,6 +2993,13 @@ msgid "First SN"
 msgstr "První SN"
 
 #. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Fix discrepancies"
+msgstr "Opravte nesrovnalosti"
+
+#. module: stock
 #: model:ir.model.fields.selection,name:stock.selection__stock_rule__group_propagation_option__fixed
 msgid "Fixed"
 msgstr "Pevné"
@@ -4045,8 +4056,28 @@ msgstr "Není možné rezervovat více produktů %s, než máte na skladě."
 #: code:addons/stock/models/stock_quant.py:0
 #, python-format
 msgid ""
-"It is not possible to unreserve more products of %s than you have in stock."
-msgstr "Není možné zrušit rezervaci více produktům %s, než máte na skladě."
+"It is not possible to reserve more products of %s than you have in stock.\n"
+"\n"
+"You can fix the discrepancies by clicking on the button below.\n"
+"The correction will remove the reservation of the impacted operations on all companies.\n"
+"If the error persists, or you see this message appear often, please submit a Support Ticket at https://www.odoo.com/help"
+msgstr ""
+"Není možné rezervovat více produktů %s, než máte na skladě.\n"
+"\n"
+"Nesrovnalosti můžete opravit kliknutím na tlačítko níže.\n"
+"Oprava odstraní výhradu dotčených operací u všech společností.\n"
+"Pokud chyba přetrvává nebo se tato zpráva zobrazuje často, odešlete žádost o podporu na https://www.odoo.com/help"
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"It is not possible to unreserve more products of %s than you have in stock.\n"
+"Please contact your system administrator to rectify this issue."
+msgstr ""
+"Není možné odrezervovat více produktů %s, než máte na skladě.\n"
+"Obraťte se na správce systému, aby tento problém napravil."
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_picking__move_type
@@ -4476,6 +4507,13 @@ msgstr "Lokace: Kdy dorazí do"
 #, python-format
 msgid "Locations"
 msgstr "Lokace"
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_picking.py:0
+#, python-format
+msgid "Locations to update"
+msgstr "Lokace k aktualizaci"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
@@ -7138,6 +7176,14 @@ msgid ""
 msgstr ""
 "Pro tyto sklady budou vytvořeny trasy a můžete je vybrat na výrobcích a "
 "kategoriích výrobků"
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_location.py:0
+#: code:addons/stock/models/stock_rule.py:0
+#, python-format
+msgid "Rule %s belongs to %s while the route belongs to %s."
+msgstr "Pravidlo %s patří k %s, zatímco trasa patří k %s."
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_rule__rule_message
@@ -9979,6 +10025,28 @@ msgid ""
 msgstr ""
 "Nelze přesunout stejný obsah balíku více než jednou ve stejném přenosu nebo "
 "rozdělit stejný balíček do dvou umístění."
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You cannot pack products into the same package when they are from both "
+"immediate and planned transfers."
+msgstr ""
+"Nemůžete zabalit produkty do stejného balíku, pokud jsou z okamžitého i "
+"plánovaného převodu."
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You cannot pack products into the same package when they are from different "
+"transfers with different operation types."
+msgstr ""
+"Nemůžete zabalit produkty do stejného balíku, pokud pocházejí z různých "
+"převodů s různými typy operací."
 
 #. module: stock
 #. odoo-python

@@ -71,8 +71,8 @@ class AccountFiscalPosition(models.Model):
     @api.constrains('zip_from', 'zip_to')
     def _check_zip(self):
         for position in self:
-            if position.zip_from and position.zip_to and position.zip_from > position.zip_to:
-                raise ValidationError(_('Invalid "Zip Range", please configure it properly.'))
+            if bool(position.zip_from) != bool(position.zip_to) or position.zip_from > position.zip_to:
+                raise ValidationError(_('Invalid "Zip Range", You have to configure both "From" and "To" values for the zip range and "To" should be greater than "From".'))
 
     @api.constrains('country_id', 'state_ids', 'foreign_vat')
     def _validate_foreign_vat_country(self):
@@ -106,7 +106,7 @@ class AccountFiscalPosition(models.Model):
             return taxes
         result = self.env['account.tax']
         for tax in taxes:
-            taxes_correspondance = self.tax_ids.filtered(lambda t: t.tax_src_id == tax._origin)
+            taxes_correspondance = self.tax_ids.filtered(lambda t: t.tax_src_id == tax._origin and (not t.tax_dest_id or t.tax_dest_active))
             result |= taxes_correspondance.tax_dest_id if taxes_correspondance else tax
         return result
 
@@ -142,11 +142,12 @@ class AccountFiscalPosition(models.Model):
 
     @api.model
     def _convert_zip_values(self, zip_from='', zip_to=''):
-        max_length = max(len(zip_from), len(zip_to))
-        if zip_from.isdigit():
-            zip_from = zip_from.rjust(max_length, '0')
-        if zip_to.isdigit():
-            zip_to = zip_to.rjust(max_length, '0')
+        if zip_from and zip_to:
+            max_length = max(len(zip_from), len(zip_to))
+            if zip_from.isdigit():
+                zip_from = zip_from.rjust(max_length, '0')
+            if zip_to.isdigit():
+                zip_to = zip_to.rjust(max_length, '0')
         return zip_from, zip_to
 
     @api.model_create_multi
@@ -264,6 +265,7 @@ class AccountFiscalPositionTax(models.Model):
     company_id = fields.Many2one('res.company', string='Company', related='position_id.company_id', store=True)
     tax_src_id = fields.Many2one('account.tax', string='Tax on Product', required=True, check_company=True)
     tax_dest_id = fields.Many2one('account.tax', string='Tax to Apply', check_company=True)
+    tax_dest_active = fields.Boolean(related="tax_dest_id.active")
 
     _sql_constraints = [
         ('tax_src_dest_uniq',

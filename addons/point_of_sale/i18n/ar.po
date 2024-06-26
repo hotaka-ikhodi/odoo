@@ -8,8 +8,8 @@
 # Martin Trigaux, 2023
 # Niyas Raphy, 2023
 # Mehjabin Farsana, 2023
-# Malaz Abuidris <msea@odoo.com>, 2023
 # Wil Odoo, 2024
+# Malaz Abuidris <msea@odoo.com>, 2024
 # 
 msgid ""
 msgstr ""
@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-06 13:31+0000\n"
 "PO-Revision-Date: 2022-09-22 05:53+0000\n"
-"Last-Translator: Wil Odoo, 2024\n"
+"Last-Translator: Malaz Abuidris <msea@odoo.com>, 2024\n"
 "Language-Team: Arabic (https://app.transifex.com/odoo/teams/41243/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -950,13 +950,10 @@ msgstr "أفضل: "
 #: model:ir.model.fields,help:point_of_sale.field_pos_config__limited_partners_loading
 #: model:ir.model.fields,help:point_of_sale.field_res_config_settings__pos_limited_partners_loading
 msgid ""
-"By default, 100 partners are loaded.\n"
+"By default, 10000 partners are loaded.\n"
 "When the session is open, we keep on loading all remaining partners in the background.\n"
 "In the meantime, you can use the 'Load Customers' button to load partners from database."
 msgstr ""
-"يتم تحميل 100 شريك افتراضياً. \n"
-"عندما تُفتَح الجلسة، نستمر بتحميل كافة الشركاء المتبقين في الخلفية. \n"
-"في الوقت الراهن، بوسعك استخدام زر 'تحميل العملاء' لتحميل الشركاء من قاعدة البيانات. "
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config__iface_print_via_proxy
@@ -1427,7 +1424,7 @@ msgstr "الشركة "
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config__company_has_template
 #: model:ir.model.fields,field_description:point_of_sale.field_res_config_settings__pos_company_has_template
 msgid "Company has chart of accounts"
-msgstr "لدى الشركة مخطط حسابات "
+msgstr "لدى الشركة شجرة حسابات "
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_res_config_settings
@@ -2904,7 +2901,7 @@ msgstr "مفوتر"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
 msgid "Invoices"
-msgstr "الفواتير"
+msgstr "فواتير العملاء "
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.ticket_validation_screen
@@ -3781,7 +3778,7 @@ msgstr ""
 #: code:addons/point_of_sale/models/pos_config.py:0
 #, python-format
 msgid "Only administrators can edit receipt headers and footers"
-msgstr ""
+msgstr "وحدهم المدراء بوسعهم تحرير ترويسات وتذييلات الإيصالات "
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config__only_round_cash_method
@@ -6439,12 +6436,10 @@ msgstr "يجب أن ينتمى دفتر يومية فواتير نقطة الب�
 #, python-format
 msgid ""
 "The maximum difference allowed is %s.\n"
-"\n"
-"                        Please contact your manager to accept the closing difference."
+"Please contact your manager to accept the closing difference."
 msgstr ""
 "الحد الأقصى للفرق المسموح به هو %s.\n"
-"\n"
-"                        يرجى التواصل مع مديرك لقبول فرق الإقفال. "
+"يرجى التواصل مع مديرك لقبول فرق الإقفال. "
 
 #. module: point_of_sale
 #. odoo-python

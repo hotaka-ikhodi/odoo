@@ -8,6 +8,7 @@ import json
 
 from odoo import api, fields, models, _, SUPERUSER_ID
 from odoo.exceptions import UserError, ValidationError
+from odoo.osv import expression
 from odoo.tools import float_compare, float_round, format_datetime
 
 
@@ -681,16 +682,22 @@ class MrpWorkorder(models.Model):
             workorder.with_context(bypass_duration_calculation=True).write(vals)
         return True
 
+    def _domain_mrp_workcenter_productivity(self, doall):
+        domain = [('workorder_id', 'in', self.ids), ('date_end', '=', False)]
+        if not doall:
+            domain = expression.AND([domain, [('user_id', '=', self.env.user.id)]])
+        return domain
+
     def end_previous(self, doall=False):
         """
         @param: doall:  This will close all open time lines on the open work orders when doall = True, otherwise
         only the one of the current user
         """
         # TDE CLEANME
-        domain = [('workorder_id', 'in', self.ids), ('date_end', '=', False)]
-        if not doall:
-            domain.append(('user_id', '=', self.env.user.id))
-        self.env['mrp.workcenter.productivity'].search(domain, limit=None if doall else 1)._close()
+        self.env['mrp.workcenter.productivity'].search(
+            self._domain_mrp_workcenter_productivity(doall),
+            limit=None if doall else 1
+        )._close()
         return True
 
     def end_all(self):
@@ -781,7 +788,7 @@ class MrpWorkorder(models.Model):
         cycle_number = float_round(qty_production / capacity, precision_digits=0, rounding_method='UP')
         if alternative_workcenter:
             # TODO : find a better alternative : the settings of workcenter can change
-            duration_expected_working = (self.duration_expected - self.workcenter_id.time_start - self.workcenter_id.time_stop) * self.workcenter_id.time_efficiency / (100.0 * cycle_number)
+            duration_expected_working = (self.duration_expected - self.workcenter_id._get_expected_duration(self.product_id)) * self.workcenter_id.time_efficiency / (100.0 * cycle_number)
             if duration_expected_working < 0:
                 duration_expected_working = 0
             capacity = alternative_workcenter._get_capacity(self.product_id)

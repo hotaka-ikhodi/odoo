@@ -319,8 +319,8 @@ class PosSession(models.Model):
                 else:
                     raise e
 
+            balance = sum(self.move_id.line_ids.mapped('balance'))
             try:
-                balance = sum(self.move_id.line_ids.mapped('balance'))
                 with self.move_id._check_balanced({'records': self.move_id.sudo()}):
                     pass
             except UserError:
@@ -950,7 +950,7 @@ class PosSession(models.Model):
     def _apply_diff_on_account_payment_move(self, account_payment, payment_method, diff_amount):
         source_vals, dest_vals = self._get_diff_vals(payment_method.id, diff_amount)
         outstanding_line = account_payment.move_id.line_ids.filtered(lambda line: line.account_id.id == source_vals['account_id'])
-        new_balance = outstanding_line.balance + diff_amount
+        new_balance = outstanding_line.balance + self._amount_converter(diff_amount, self.stop_at, False)
         new_balance_compare_to_zero = self.currency_id.compare_amounts(new_balance, 0)
         account_payment.move_id.write({
             'line_ids': [
@@ -1619,7 +1619,7 @@ class PosSession(models.Model):
         for key, group in groupby(sorted(product_template_attribute_values, key=key), key=key):
             attribute_line_id, attribute_id = key
             values = [{**ptav.product_attribute_value_id.read(['name', 'is_custom', 'html_color'])[0],
-                       'price_extra': ptav.price_extra} for ptav in list(group)]
+                       'price_extra': ptav.price_extra} for ptav in list(group) if ptav.ptav_active]
             res[attribute_line_id] = {
                 'id': attribute_line_id,
                 'name': product_attributes_by_id[attribute_id].name,

@@ -53,7 +53,7 @@ describe('applyColor', () => {
     it('should apply a background color on empty selection', async () => {
         await testEditor(BasicEditor, {
             contentBefore: '<p>[<br></p><p><br></p><p>]<br></p>',
-            stepFunction: setColor('rgb(255, 0, 0)', 'background-color'),
+            stepFunction: setColor('rgb(255, 0, 0)', 'backgroundColor'),
             contentAfterEdit: '<p>[<font data-oe-zws-empty-inline="" style="background-color: rgb(255, 0, 0);">\u200B</font></p>' +
                               '<p><font data-oe-zws-empty-inline="" style="background-color: rgb(255, 0, 0);">\u200B</font></p>' +
                               '<p>]<font data-oe-zws-empty-inline="" style="background-color: rgb(255, 0, 0);">\u200B</font></p>',
@@ -91,15 +91,17 @@ describe('applyColor', () => {
         await testEditor(BasicEditor, {
             contentBefore: unformat(`
                 <table><tbody>
-                    <tr><td>[ab</td></tr>
-                    <tr><td contenteditable="false">cd]</td></tr>
+                    <tr><td class="o_selected_td">[ab</td></tr>
+                    <tr><td contenteditable="false" class="o_selected_td">cd</td></tr>
+                    <tr><td class="o_selected_td">ef]</td></tr>
                 </tbody></table>
             `),
-            stepFunction: setColor('rgb(255, 0, 0)', 'background-color'),
+            stepFunction: setColor('rgb(255, 0, 0)', 'backgroundColor'),
             contentAfter: unformat(`
                 <table><tbody>
                     <tr><td style="background-color: rgb(255, 0, 0);">[]ab</td></tr>
                     <tr><td contenteditable="false">cd</td></tr>
+                    <tr><td style="background-color: rgb(255, 0, 0);">ef</td></tr>
                 </tbody></table>
             `),
         });

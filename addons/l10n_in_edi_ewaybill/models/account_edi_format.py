@@ -4,6 +4,7 @@
 import re
 import json
 from datetime import timedelta
+from markupsafe import Markup
 
 from odoo import models, fields, api, _
 from odoo.tools import html_escape
@@ -96,7 +97,7 @@ class AccountEdiFormat(models.Model):
                 error_message.append(_("- Transport document number and date is required when Transportation Mode is Rail,Air or Ship"))
         if error_message:
             error_message.insert(0, _("The following information are missing on the invoice (see eWayBill tab):"))
-        goods_lines = move.invoice_line_ids.filtered(lambda line: not (line.display_type or line.is_rounding_line or line.product_id.type == "service"))
+        goods_lines = move.invoice_line_ids.filtered(lambda line: not (line.display_type in ('line_section', 'line_note', 'rounding') or line.product_id.type == "service"))
         if not goods_lines:
             error_message.append(_('You need at least one product having "Product Type" as stockable or consumable.'))
         if base == "irn":
@@ -249,6 +250,21 @@ class AccountEdiFormat(models.Model):
             })
             inv_res = {"success": True, "attachment": attachment}
             res[invoices] = inv_res
+            body = Markup("""
+                <b>{}</b><br/>
+                <ul>
+                    <li>{}<i class="o-mail-Message-trackingSeparator fa fa-long-arrow-right mx-1 text-600"></i>{}</li>
+                    <li>{}<i class="o-mail-Message-trackingSeparator fa fa-long-arrow-right mx-1 text-600"></i>{}</li>
+                </ul>
+            """).format(
+                _('E-wayBill Sent'),
+                _('Number'),
+                str(response.get("data", {}).get('ewayBillNo', 0)) or str(response.get("data", {}).get('EwbNo', 0)),
+                _('Validity'),
+                str(response.get("data", {}).get('EwbValidTill'))
+            )
+
+            invoices.message_post(body=body)
         return res
 
     def _l10n_in_edi_irn_ewaybill_generate_json(self, invoice):
@@ -333,6 +349,20 @@ class AccountEdiFormat(models.Model):
             })
             inv_res = {"success": True, "attachment": attachment}
             res[invoices] = inv_res
+            body = Markup("""
+                <b>{}</b><br/>
+                <ul>
+                    <li>{}<i class="o-mail-Message-trackingSeparator fa fa-long-arrow-right mx-1 text-600"></i>{}</li>
+                    <li>{}<i class="o-mail-Message-trackingSeparator fa fa-long-arrow-right mx-1 text-600"></i>{}</li>
+                </ul>
+            """).format(
+                _('E-wayBill Sent'),
+                _('Number'),
+                str(response.get("data", {}).get('ewayBillNo', 0)) or str(response.get("data", {}).get('EwbNo', 0)),
+                _('Validity'),
+                str(response.get("data", {}).get('EwbValidTill'))
+            )
+            invoices.message_post(body=body)
         return res
 
     def _l10n_in_edi_ewaybill_get_error_message(self, code):

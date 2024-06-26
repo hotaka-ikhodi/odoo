@@ -569,7 +569,7 @@ class MailComposer(models.TransientModel):
         return []
 
     def _onchange_template_id(self, template_id, composition_mode, model, res_id):
-        """ - mass_mailing: we cannot render, so return the template values
+        r""" - mass_mailing: we cannot render, so return the template values
             - normal mode: return rendered values
             /!\ for x2many field, this onchange return command instead of ids
         """
@@ -629,6 +629,10 @@ class MailComposer(models.TransientModel):
                             'partner_ids', 'reply_to',
                             'attachment_ids', 'mail_server_id'
                            ] if key in default_values)
+
+        if template_id:  # Restore default sender if not updated on template switch (for both "mass_mail" and "comment" modes)
+            if 'email_from' not in values:
+                values['email_from'] = self.default_get(['email_from']).get('email_from')
 
         if values.get('body_html'):
             values['body'] = values.pop('body_html')
